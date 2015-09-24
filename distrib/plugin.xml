@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+
+	id="tripleGEO"
+	iconfile="icon.png"
+	description="tripleGEO"
+	tooltip="Tranforms a shapefile file to a RDF format"
+	category="Transform"
+	classname="plugin.tripleGEOStepMeta">
+		
+	<libraries>
+		<library name="tripleGEO.jar"/>
+	</libraries>
+
+	<localized_tooltip>
+		<tooltip locale="en_US">Transforms a shapefile file in a RDF output.</tooltip>
+		<tooltip locale="es_ES">Transforma un archivo shapefile en una salida RDF.</tooltip>
+	</localized_tooltip>
+   
+</plugin>
+
