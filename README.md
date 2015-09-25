@@ -18,7 +18,7 @@
 					<li>Now, you must edit the file <code>spoon.sh</code>:<br/>
 						<ul>
 							<li>In the section <code>Libraries used by Kettle</code> add the following lines:<br/>
-								<code>for file in $BASEDIR/lib/library/*.jar</code><br/>
+								<code>for file in $BASEDIR/lib/libTripleGEO/*.jar</code><br/>
 								<code>do</code><br/>
 									 &nbsp; &nbsp; &nbsp;<code>CLASSPATH=$CLASSPATH:$file</code><br/>
 								<code>done</code>
