@@ -15,7 +15,7 @@
 				<ol>
 					<li>Download the attachment <code>tripleGeoplugin.zip</code> and unzip it in the <code>plugins/steps/</code> directory of Geokettle.</li>
 					<li>Download the attachment <code>libTripleGEO.zip</code> and unzip it in the <code>lib/</code> directory of Geokettle.</li>
-					<li>Now, you must edit the file <code>spoon.sh</code>:<br/>
+					<li>Now, you must edit the file <code>*.sh</code>:<br/>
 						<ul>
 							<li>In the section <code>Libraries used by Kettle</code> add the following lines:<br/>
 								<code>for file in $BASEDIR/lib/libTripleGEO/*.jar</code><br/>
