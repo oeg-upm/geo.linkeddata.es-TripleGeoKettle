@@ -29,7 +29,7 @@
 					<li>You are now ready to start using the tripleGEO plugin.</li>
 				</ol>
 				<h2><a name="screenshot" class="anchor" href="#Screenshot"><span class="octicon octicon-link"></span></a>Screenshot</h2>
-				<img src="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/tree/master/distrib/Screenshot.png">
+				<img src="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/blob/master/distrib/Screenshot.png">				
 				<h2><a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 				<p>The contents of this project are licensed under the <a href="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/blob/master/LICENSE">Apache License</a>.</p>
 			</article>
