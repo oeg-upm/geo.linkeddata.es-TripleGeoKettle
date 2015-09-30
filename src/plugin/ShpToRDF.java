@@ -18,8 +18,6 @@ import org.opengis.referencing.operation.MathTransform;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPolygon;
 
 /**
  * Tranforms a shapefile file to a RDF format.
@@ -260,25 +258,9 @@ public class ShpToRDF {
 		} else if (geometry.getGeometryType().equals(Constants.POLYGON)) {
 			insertPolygon(geo, geometry);
 		} else if (geometry.getGeometryType().equals(Constants.MULTI_POLYGON)) {
-			MultiPolygon multiPolygon = (MultiPolygon) geometry;
-			for (int i = 0; i < multiPolygon.getNumGeometries(); ++i) {
-				Geometry tmpGeometry = multiPolygon.getGeometryN(i);
-				if (tmpGeometry.getGeometryType().equals(Constants.POLYGON)) {
-					insertPolygon(geo, tmpGeometry);
-				} else if (tmpGeometry.getGeometryType().equals(Constants.LINE_STRING)) {
-					insertLineString(geo, tmpGeometry);
-				}
-			}
+			insertMultiPolygon(geo, geometry);
 		} else if (geometry.getGeometryType().equals(Constants.MULTI_LINE_STRING)) {
-			MultiLineString multiLineString = (MultiLineString) geometry;
-			for (int i = 0; i < multiLineString.getNumGeometries(); ++i) {
-				Geometry tmpGeometry = multiLineString.getGeometryN(i);
-				if (tmpGeometry.getGeometryType().equals(Constants.POLYGON)) {
-					insertPolygon(geo, tmpGeometry);
-				} else if (tmpGeometry.getGeometryType().equals(Constants.LINE_STRING)) {
-					insertLineString(geo, tmpGeometry);
-				}
-			}
+			insertMultiLineString(geo, geometry);
 		}		
 	}	
 
@@ -304,6 +286,28 @@ public class ShpToRDF {
 				Constants.NS_GEO +  Constants.WKTLiteral);
 	}
 
+	/**
+	 * Handle MultiPolygon geometry according to GeoSPARQL standard
+	 * @param resource - Attribute
+	 * @param geo - Geometry
+	 */
+	private void insertMultiPolygon(String resource, Geometry geo) {	
+		insertResourceTypeResource(this.resourceNS + resource, Constants.NS_SF + Constants.MULTI_POLYGON);		    
+		insertLiteralTriplet(this.resourceNS + resource,Constants.NS_GEO + Constants.WKT, geo.toText(),
+				Constants.NS_GEO +  Constants.WKTLiteral);
+	}
+	
+	/**
+	 * Handle MultiPolyline geometry according to GeoSPARQL standard
+	 * @param resource - Attribute
+	 * @param geo - Geometry
+	 */
+	private void insertMultiLineString(String resource, Geometry geo) {          
+		insertResourceTypeResource(this.resourceNS + resource, Constants.NS_SF + Constants.MULTI_LINE_STRING);	
+		insertLiteralTriplet(this.resourceNS + resource, Constants.NS_GEO + Constants.WKT, geo.toText(), 
+				Constants.NS_GEO + Constants.WKTLiteral);
+	}
+	
 	/**
 	 * Handle resource type
 	 * @param r1 - Attribute 1
