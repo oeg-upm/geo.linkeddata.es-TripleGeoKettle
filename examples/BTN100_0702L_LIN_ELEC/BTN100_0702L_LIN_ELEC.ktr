@@ -151,7 +151,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-		<attributename>ID_CODIGO</attributename>
+		<attributename>ID</attributename>
 		<feature>Lin_elec</feature>
 		<ontologyns>http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#</ontologyns>
 		<ontologynsprefix>linElec</ontologynsprefix>

@@ -258,9 +258,31 @@ public class ShpToRDF {
 		} else if (geometry.getGeometryType().equals(Constants.POLYGON)) {
 			insertPolygon(geo, geometry);
 		} else if (geometry.getGeometryType().equals(Constants.MULTI_POLYGON)) {
-			insertMultiPolygon(geo, geometry);
+			if (geometry.getNumGeometries() == 1){
+				Geometry tmpGeometry = geometry.getGeometryN(0);
+				if (tmpGeometry.getGeometryType().equals(Constants.POLYGON)) {
+					insertPolygon(geo, tmpGeometry);
+				} else if (tmpGeometry.getGeometryType().equals(Constants.LINE_STRING)) {
+					insertLineString(geo, tmpGeometry);
+				} else if (tmpGeometry.getGeometryType().equals(Constants.POINT)) {
+					insertPoint(geo, tmpGeometry);
+				}	
+			} else {
+				insertMultiPolygon(geo, geometry);
+			}	
 		} else if (geometry.getGeometryType().equals(Constants.MULTI_LINE_STRING)) {
-			insertMultiLineString(geo, geometry);
+			if (geometry.getNumGeometries() == 1){
+				Geometry tmpGeometry = geometry.getGeometryN(0);
+				if (tmpGeometry.getGeometryType().equals(Constants.POLYGON)) {
+					insertPolygon(geo, tmpGeometry);
+				} else if (tmpGeometry.getGeometryType().equals(Constants.LINE_STRING)) {
+					insertLineString(geo, tmpGeometry);
+				} else if (tmpGeometry.getGeometryType().equals(Constants.POINT)) {
+					insertPoint(geo, tmpGeometry);
+				}	
+			} else {
+				insertMultiLineString(geo, geometry);
+			}		
 		}		
 	}	
 
