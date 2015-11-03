@@ -15,10 +15,12 @@ public class Constants {
 	public static final String WKT = "asWKT";
 	public static final String WKTLiteral = "wktLiteral";
 	public static final String UTF_8 = "UTF-8";	
-	public static final String STRING_TO_REPLACE = "+";
-	public static final String SEPARATOR = "_";
-	public static final String SPECIAL_CHARACTER = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
-	public static final String ASCII = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+	public static final String STRING_TO_REPLACE = "+";	
+	public static final String SEPARATOR = "-";
+	public static final String CVS_SPLIT = ",";
+	public static final String SPECIAL_CHARACTER =  "áàäãâéèëêẽíìîïĩóòöõôúùüûũñ¥ÃÁÀÄÂẼÊÉÈËĨÍÌÏÎÕÓÔÒÖÔÚŨÙÜÛÑḉçÇ";
+	public static final String ASCII = 				"aaaaaeeeeeiiiiiooooouuuuunnAAAAAEEEEEIIIIIOOOOOOUUUUUNccC";
+	public static final String SYMBOLS = "/\\|@#~½¬ºª¡!\"·$%&()=¿?[]{}<>;:_*,.^+`'©®™¢Ø˜´";
 	public static final String tmp = "./tmp";
 	public static final String outputField = "rdf_output";
 	public static final String format = "TURTLE";
@@ -33,7 +35,7 @@ public class Constants {
 	public static final String NS_FOAF = "http://xmlns.com/foaf/0.1/";
 	public static final String NS_WGS84 = "http://www.w3.org/2003/01/geo/wgs84_pos#";		
 	public static final String NS_OWL = "http://www.w3.org/2002/07/owl#";
-	public static final String NS_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";	
+	public static final String NS_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 }
 
 // END Constants.java

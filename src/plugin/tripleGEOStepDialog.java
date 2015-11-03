@@ -83,6 +83,11 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	private FormData fdlLanguage;
 	private FormData fdLanguage;	
 
+	private Label wlPathCSV;
+	private Text wPathCSV;
+	private FormData fdlPathCSV;
+	private FormData fdPathCSV;	
+	
 	private Label wluuids;
 	private Button wuuids;
 	private FormData fdluuids;
@@ -105,6 +110,8 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	private CTabItem wMainTab;
 
 	private TransMeta trans;
+	
+	private ColumnDefinition[] columns;
 
 	/**
 	 * Instantiates a new base step dialog.
@@ -323,6 +330,25 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.fdLanguage.right = new FormAttachment(100, -margin);
 		this.fdLanguage.top = new FormAttachment(this.wResourceNSPrefix, margin);
 		this.wLanguage.setLayoutData(this.fdLanguage);
+		
+		// PATH CSV PathCSV
+		this.wlPathCSV = new Label(cData, 131072);
+		this.wlPathCSV.setText(BaseMessages.getString(PKG,"tripleGEOStepDialog.PathCSV.Label"));
+		this.props.setLook(this.wlPathCSV);
+		this.fdlPathCSV = new FormData();
+		this.fdlPathCSV.left = new FormAttachment(0, 0);
+		this.fdlPathCSV.right = new FormAttachment(middle, -margin);
+		this.fdlPathCSV.top = new FormAttachment(this.wLanguage, margin);
+		this.wlPathCSV.setLayoutData(this.fdlPathCSV);
+
+		this.wPathCSV = new Text(cData, 18436);
+		this.props.setLook(this.wPathCSV);
+		this.wPathCSV.addModifyListener(lsMod);
+		this.fdPathCSV = new FormData();
+		this.fdPathCSV.left = new FormAttachment(middle, 0);
+		this.fdPathCSV.right = new FormAttachment(100, -margin);
+		this.fdPathCSV.top = new FormAttachment(this.wLanguage, margin);
+		this.wPathCSV.setLayoutData(this.fdPathCSV);	
 
 		// UUIDS
 		this.wluuids = new Label(cData, 131072);
@@ -331,7 +357,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.fdluuids = new FormData();
 		this.fdluuids.left = new FormAttachment(0, 0);
 		this.fdluuids.right = new FormAttachment(middle, -margin);
-		this.fdluuids.top = new FormAttachment(this.wLanguage, margin);	    
+		this.fdluuids.top = new FormAttachment(this.wPathCSV, margin);	    
 		this.wluuids.setLayoutData(fdluuids);
 
 		this.wuuids = new Button(cData, 32);
@@ -339,7 +365,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.fduuids = new FormData();
 		this.fduuids.left = new FormAttachment(middle, 0);
 		this.fduuids.right = new FormAttachment(100, -margin);
-		this.fduuids.top = new FormAttachment(this.wLanguage, margin);
+		this.fduuids.top = new FormAttachment(this.wPathCSV, margin);
 		this.wuuids.setLayoutData(fduuids);	    
 
 		// CHECKBOX UUIDS
@@ -381,7 +407,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		ciColumns[0] = new ColumnInfo(BaseMessages.getString(PKG,"tripleGEOStepDialog.ShowColumns.Label"), 
 				2, this.input.getShow(), true);
 		ciColumns[1] = new ColumnInfo(BaseMessages.getString(PKG,"tripleGEOStepDialog.Column.Label"), 
-				ColumnInfo.COLUMN_TYPE_TEXT, false, true);
+				ColumnInfo.COLUMN_TYPE_TEXT, false);
 		ciColumns[2] = new ColumnInfo(BaseMessages.getString(PKG,"tripleGEOStepDialog.otherPrefixColumns.Label"), 
 				ColumnInfo.COLUMN_TYPE_TEXT, false);
 		ciColumns[3] = new ColumnInfo(BaseMessages.getString(PKG,"tripleGEOStepDialog.otherColumns.Label"), 
@@ -459,7 +485,8 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wOntologyNSPrefix.setText(this.input.getOntologyNSPrefix());
 		this.wResourceNS.setText(this.input.getResourceNS());
 		this.wResourceNSPrefix.setText(this.input.getResourceNSPrefix());
-		this.wLanguage.setText(this.input.getLanguage());    	    
+		this.wLanguage.setText(this.input.getLanguage());    
+		this.wPathCSV.setText(this.input.getPathCSV());
 		this.wuuids.setSelection(this.input.isUuidsActive());
 
 		FieldDefinition[] fields = this.input.getFields();
@@ -475,16 +502,16 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wFields.setRowNums();
 		this.wFields.optWidth(true);		
 
-		ColumnDefinition[] columns = this.input.getColumns();	
+		columns = this.input.getColumns();	
 		if ((columns != null && this.trans.haveHopsChanged()) || (columns == null)){
 			loadColumns();
 		} else if (columns != null || (columns != null && !this.trans.haveHopsChanged())) {
 			for (ColumnDefinition c : columns) {
 				TableItem item = new TableItem(this.wColumns.table, SWT.NONE);
 				int colnr = 1;
-				item.setText(colnr++, Const.NVL(c.show, "YES"));				
+				item.setText(colnr++, Const.NVL(c.show, "YES"));
 				item.setText(colnr++, Const.NVL(c.column, ""));
-				if (c.getColumn().equalsIgnoreCase(Constants.the_geom)){
+				if (c.getColumn().equalsIgnoreCase(Constants.the_geom)){					
 					item.setText(colnr++, "n/a");
 					item.setText(colnr++, "n/a");				
 				} else {
@@ -545,8 +572,14 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			this.input.setLanguage(this.wLanguage.getText());
 		} else {
 			this.input.setLanguage("null");
-		}	    
-
+		}
+		
+		if (!isEmpty(this.wPathCSV.getText())) {			
+			this.input.setPathCSV(this.wPathCSV.getText());
+		} else {
+			this.input.setPathCSV("null");
+		}
+		
 		int nrNonEmptyFields = this.wFields.nrNonEmpty();
 		FieldDefinition[] fields = new FieldDefinition[nrNonEmptyFields];
 		for (int i = 0; i < nrNonEmptyFields; i++) {
@@ -562,32 +595,56 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wFields.optWidth(true);		
 
 		int nrNonEmptyColumns = this.wColumns.nrNonEmpty();	
-		ColumnDefinition[] columns = new ColumnDefinition[nrNonEmptyColumns];
+		columns = new ColumnDefinition[nrNonEmptyColumns];
 		for (int i = 0; i < nrNonEmptyColumns; i++) {
 			TableItem item = this.wColumns.getNonEmpty(i);
 			columns[i] = new ColumnDefinition();
 			int colnr = 1;
-			columns[i].show = item.getText(colnr++);
-			columns[i].column = item.getText(colnr++);
+			columns[i].show = item.getText(colnr++);			
+			if (i == 0){
+				columns[i].column = "the_geom";
+				colnr++;
+			} else {
+				columns[i].column = item.getText(colnr++);
+			}			
 			columns[i].prefix = item.getText(colnr++);
+			@SuppressWarnings("unused")
+			Boolean flag = true;
+			if (columns[i].column.equalsIgnoreCase("the_geom")){
+				flag = false;
+			} else {
+				flag = true;
+			}			
 			String uri = item.getText(colnr++);
-			if (isValidURL(uri)){
+			if (isValidURL(uri,true)){
 				columns[i].uri = uri;
 			} else {
 				columns[i].uri = null;
 			}			
-		}		
-		if (nrNonEmptyColumns > 0){
+		}	
+		
+		int j = 0;
+		RowMetaInterface rm;
+		try {
+			rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));
+			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
+				columns[j].column_shp = vmeta.getName();
+				j++;
+			}
+		} catch (KettleStepException e) {
+			e.printStackTrace();
+		}
+		
+		if (nrNonEmptyColumns > 0){			
 			this.input.setColumns(columns);
 		}
 		this.wColumns.removeEmptyRows();
 		this.wColumns.setRowNums();
 		this.wColumns.optWidth(true);		
-
-		this.input.setChanged();	    
+		this.input.setChanged(); 
 		dispose();
 	}	
-
+	
 	/**
 	 * Cancel
 	 */
@@ -596,6 +653,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.input.setChanged(this.changed);
 		dispose();
 	}
+	
 
 	/**
 	 * Verifies if the string is empty
@@ -619,19 +677,22 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	 * @param url
 	 * @return true if the url is valid; otherwise, false
 	 */	
-	public boolean isValidURL(String url) {
-		URL u = null;
-		try {  
-			u = new URL(url);  
-		} catch (MalformedURLException e) {  
-			return false;  
+	public boolean isValidURL(String url, Boolean flag) {
+		if (flag) {
+			URL u = null;
+			try {  
+				u = new URL(url);  
+			} catch (MalformedURLException e) {  
+				return false;  
+			}
+			try {  
+				u.toURI();  
+			} catch (URISyntaxException e) {  
+				return false;  
+			}  
+			return true;  
 		}
-		try {  
-			u.toURI();  
-		} catch (URISyntaxException e) {  
-			return false;  
-		}  
-		return true;  
+		return true;
 	}
 
 	/**
@@ -639,11 +700,14 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	 */
 	private void loadColumns() {		
 		try {
+			int j = 0;
 			RowMetaInterface rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));	
 			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
 				TableItem item = new TableItem(this.wColumns.table, 0);
 				item.setText(1, "YES");
 				item.setText(2, vmeta.getName());
+				columns[j].column_shp = vmeta.getName();
+				j++;
 				if (vmeta.getName().equalsIgnoreCase(Constants.the_geom)){
 					item.setText(3, "n/a");
 					item.setText(4, "n/a");		
@@ -651,7 +715,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			}
 			this.wColumns.removeEmptyRows();
 			this.wColumns.setRowNums();
-			this.wColumns.optWidth(true);		
+			this.wColumns.optWidth(true);			
 		} catch (KettleStepException e) {
 			e.printStackTrace();
 		}

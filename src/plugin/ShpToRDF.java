@@ -31,6 +31,10 @@ public class ShpToRDF {
 	private String resourceNS;
 	private String resourceNSPrefix;
 	private String language;
+	private Boolean flag_csv;
+	private ClassesCSV[] classes;
+	private CSV csv;		
+
 	private boolean uuidsActive = false;
 	private FieldDefinition[] fields;
 	private ColumnDefinition[] columns;
@@ -45,8 +49,11 @@ public class ShpToRDF {
 	/**
 	 * ShpToRDF
 	 * @param smi - tripleGEOStepMeta
+	 * @param classes 
+	 * @param flag_csv 
+	 * @param csv 
 	 */	
-	public ShpToRDF(tripleGEOStepMeta smi){		
+	public ShpToRDF(tripleGEOStepMeta smi, Boolean flag_csv, ClassesCSV[] classes, CSV csv){		
 		setAttributeName(smi.getAttributeName());
 		setFeature(smi.getFeature());
 		setOntologyNS(smi.getOntologyNS());
@@ -54,6 +61,9 @@ public class ShpToRDF {
 		setResourceNS(smi.getResourceNS());
 		setResourceNSPrefix(smi.getResourceNSPrefix());
 		setLanguage(smi.getLanguage());
+		setFlag_csv(flag_csv);
+		setClasses(classes);
+		setCsv(csv);
 		setUuidsActive(smi.isUuidsActive());
 		setFields(smi.getFields());
 		setColumns(smi.getColumns());
@@ -102,7 +112,7 @@ public class ShpToRDF {
 				if (col.getShow().equalsIgnoreCase("YES") 
 						&& col.getUri() != null 
 						&& col.getPrefix() != null 
-						&& !col.getColumn().equalsIgnoreCase(this.attributeName)){					
+						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName)){					
 					checkPrefixUri(modelAux,col.getPrefix(),col.getUri());
 				}
 			}
@@ -138,19 +148,53 @@ public class ShpToRDF {
 		}
 
 		String label = featureAttribute;
-		featureAttribute = removeSpecialCharacter(featureAttribute);
+		featureAttribute = repeatedCharacters(removeSpecialCharacter(featureAttribute));
 		String encodingResource = null;       
 
 		if (this.uuidsActive){	
-			// Generate random UUIDs (Universally Unique Identifiers)
+			// Generate UUIDs (Universally Unique Identifiers)
 			encodingResource = UUID.nameUUIDFromBytes(featureAttribute.getBytes()).toString();		        	
 		} else {
-			encodingResource = URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
-					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR);
-		}		        	
+			encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
+					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));			
+			if (featureAttribute.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
+				encodingResource = "_" + encodingResource;
+			}
+		}
+		
+		// Type according to GeoSPARQL feature		
+		Object row_csv = null;
+		Boolean fl = false;
+		
+		// Check if the CSV file exist
+		if (getFlag_csv()){ 
+			int pos_csv = 0;
+			for (ValueMetaInterface vmeta : outputRowMeta.getValueMetaList()) {   			
+				if (vmeta.getName().equalsIgnoreCase(this.csv.getAttribute())){
+					fl = true;
+					row_csv = row[pos_csv];
+					break;
+				}
+				pos_csv++;
+			}
 
-		// Type according to GeoSPARQL feature
-		insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + this.feature );
+			// Check if the attribute in the CSV file exist
+			if (fl){			
+				for (int j = 0; j< classes.length; j++){
+					if (classes[j].getColumn().equalsIgnoreCase(row_csv.toString())){						
+						String feature_csv = repeatedCharacters(removeSpecialCharacter(classes[j].getValue()));						
+						String feature = repeatedCharacters(URLEncoder.encode(feature_csv.toLowerCase(), Constants.UTF_8)
+								.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+						insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
+						break;
+					}
+				}
+			} else {
+				insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + this.feature);
+			}			
+		} else {
+			insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + this.feature);
+		}	
 
 		// Label with special characters
 		insertLabelResource(this.resourceNS + encodingResource, label, this.language);
@@ -170,7 +214,7 @@ public class ShpToRDF {
 		} else {			
 			for (ColumnDefinition col : this.columns) {
 				if (col.getShow().equalsIgnoreCase("YES")
-						&& !col.getColumn().equalsIgnoreCase(this.attributeName) 
+						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName) 
 						&& !col.getColumn().equalsIgnoreCase(Constants.the_geom)
 						&& row[pos] != null){
 					if (col.getUri() != null && col.getPrefix() != null){						
@@ -225,18 +269,34 @@ public class ShpToRDF {
 	private void addColumns(String encodingResource, String column, Object object, String propertyNS){
 		Resource resource = this.model_rdf.createResource(this.resourceNS + encodingResource);
 		Property property = this.model_rdf.createProperty(propertyNS + column.toLowerCase());		        		
-		if (this.language.equalsIgnoreCase("null")) {
-			if (object.toString().matches(".*\\d.*")) { // Object is a number
-				resource.addProperty(property, object.toString());
-			} else if (object.toString().equals("")) {
-				resource.addProperty(property, object.toString());
-			} else { 
-				Literal literal = this.model_rdf.createLiteral(object.toString(), this.language);
+		Literal literal;
+		
+		if (object.toString().matches(".*\\d.*")) { // Object is a number				
+			if (object.toString().matches("-?\\d+(\\.\\d+)?")){
+				float number = Float.parseFloat(object.toString());			
+				int n = (int)number;
+				float partInt = number - n;
+				if (partInt == 0.0){				
+					literal = this.model_rdf.createTypedLiteral(n);
+				} else {
+					literal = this.model_rdf.createTypedLiteral(object);
+				}
+				resource.addLiteral(property, literal);
+			} else {
+				literal = this.model_rdf.createLiteral(object.toString(), "");
+				resource.addLiteral(property, literal);
+			}						
+		} else if (object.toString().equals("")) {
+			resource.addProperty(property, object.toString());
+		} else {
+			if (this.language.equalsIgnoreCase("null")){
+				literal = this.model_rdf.createLiteral(object.toString(), "");
+				resource.addLiteral(property, literal);
+			} else {
+				literal = this.model_rdf.createLiteral(object.toString(), this.language);
 				resource.addLiteral(property, literal);
 			}
-		} else {
-			resource.addProperty(property, object.toString());
-		}
+		}		
 	}
 
 	/**
@@ -400,9 +460,45 @@ public class ShpToRDF {
 
 		for (int i = 0; i < Constants.SPECIAL_CHARACTER.length(); i++)
 			input = input.replace(Constants.SPECIAL_CHARACTER.charAt(i), Constants.ASCII.charAt(i));
+				
+		for (int i = 0; i < Constants.SYMBOLS.length(); i++)
+			input = input.replace(Constants.SYMBOLS.charAt(i), '-');
 
 		return input;
-	}	
+	}
+	
+	/**
+	 * Replaces the sequence of specific repeated character.
+	 * @param input - String
+	 * @return String without specific repeated character.
+	 */	
+	public static String repeatedCharacters(String input) {
+		String s = input + " ";
+		String newString = "";
+		char char1, char2;
+			
+		for (int i = 0; i < (s.length() - 1); i++) {			
+			char1 = s.charAt(i);
+			char2 = s.charAt(i+1);				
+			if (char1 == '-'){ 
+				 if (char1 != char2){
+					 newString = newString + char1;
+				 }
+			} else {
+				newString = newString + char1;
+			}
+		}
+		
+		if (newString.equals("")){
+			return input;
+		}
+		
+		if (newString.charAt(newString.length()-1) == '-'){
+			newString = newString.substring(0, newString.length()-1); 
+		}		
+		
+		return newString;
+	}
 
 	/**
 	 * Get the RDF Model
@@ -440,6 +536,15 @@ public class ShpToRDF {
 
 	public String getLanguage() { return this.language; }
 	public void setLanguage(String language) { this.language = language; }
+	
+	public Boolean getFlag_csv() { return this.flag_csv; }
+	public void setFlag_csv(Boolean flag_csv) { this.flag_csv = flag_csv; }
+
+	public ClassesCSV[] getClasses() { return this.classes; }
+	public void setClasses(ClassesCSV[] classes) { this.classes = classes; }
+	
+	public CSV getCsv() { return this.csv; }
+	public void setCsv(CSV csv) { this.csv = csv; }	
 
 	public boolean isUuidsActive() { return this.uuidsActive; }
 	public void setUuidsActive(boolean uuidsActive) { this.uuidsActive = uuidsActive; }

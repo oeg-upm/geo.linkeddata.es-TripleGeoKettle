@@ -1,5 +1,7 @@
 package plugin;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.swt.widgets.Shell;
@@ -44,6 +46,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 	private String resourceNS;
 	private String resourceNSPrefix;
 	private String language;
+	private String pathCSV;
 	private boolean uuidsActive = false;
 	private FieldDefinition[] fields;
 	private ColumnDefinition[] columns;
@@ -64,6 +67,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 		retval = retval + "\t\t<resourcens>" + getResourceNS() + "</resourcens>" + Const.CR;    
 		retval = retval + "\t\t<resourcensprefix>" + getResourceNSPrefix() + "</resourcensprefix>" + Const.CR;
 		retval = retval + "\t\t<language>" + getLanguage() + "</language>" + Const.CR;
+		retval = retval + "\t\t<pathcsv>" + getPathCSV() + "</pathcsv>" + Const.CR;		
 		retval = retval + "\t\t<uuidsactive>" + isUuidsActive() + "</uuidsactive>" + Const.CR;	
 
 		if (this.fields != null) {
@@ -85,6 +89,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 				retval = retval + "\t\t" + XMLHandler.addTagValue("prefix", col.prefix);
 				retval = retval + "\t\t" + XMLHandler.addTagValue("uri", col.uri);
 				retval = retval + "\t\t" + XMLHandler.addTagValue("show", col.show);
+				retval = retval + "\t\t" + XMLHandler.addTagValue("column_shp", col.column_shp);
 				retval = retval + "\t\t</columns>" + Const.CR;
 			}
 			retval = retval + "\t\t</columns>" + Const.CR;
@@ -143,7 +148,8 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 			setOntologyNSPrefix(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode,"ontologynsprefix")));
 			setResourceNS(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode,"resourcens")));      
 			setResourceNSPrefix(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode,"resourcensprefix")));
-			setLanguage(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode,"language")));							
+			setLanguage(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode,"language")));
+			setPathCSV(XMLHandler.getNodeValue(XMLHandler.getSubNode(stepnode,"pathcsv")));
 			setUuidsActive("true".equalsIgnoreCase(XMLHandler.getTagValue(stepnode, "uuidsactive")));
 			Node fieldsNode = XMLHandler.getSubNode(stepnode, "fields");
 			if (fieldsNode != null) {
@@ -167,6 +173,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 					columns[i].prefix = XMLHandler.getTagValue(cnode, "prefix");
 					columns[i].uri = XMLHandler.getTagValue(cnode, "uri");
 					columns[i].show = XMLHandler.getTagValue(cnode, "show");
+					columns[i].column_shp = XMLHandler.getTagValue(cnode, "column_shp");
 				}
 			}	
 		} catch (Exception e){
@@ -178,16 +185,41 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 	 * Sets the default values.	
 	 */
 	public void setDefault(){
-		this.attributeName = "DESBDT";
-		this.feature = "Barrio";
-		this.ontologyNS = "http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#";
-		this.ontologyNSPrefix = "esadm";
-		this.resourceNS = "http://geo.linkeddata.es/resource/";    
-		this.resourceNSPrefix = "georesource";
-		this.language = "es";
-		this.uuidsActive = false;
-	}	
 
+		File fichero = null;
+		String nameFile = null;
+		try {
+			String path = tripleGEOStepMeta.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath().toString();			
+			String[] directory = path.split("tripleGEO.jar");			
+			nameFile = directory[0] + "configuration.conf";
+			fichero = new File(nameFile);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}		
+		if (fichero.exists()){
+			Configuration configuration = new Configuration(nameFile);			
+			this.attributeName = configuration.attributeName;
+			this.feature = configuration.feature;
+			this.ontologyNS = configuration.ontologyNS;
+			this.ontologyNSPrefix = configuration.ontologyNSPrefix;
+			this.resourceNS = configuration.resourceNS;    
+			this.resourceNSPrefix = configuration.resourceNSPrefix;
+			this.language = configuration.language;
+			this.pathCSV = configuration.pathCSV;
+			this.uuidsActive = configuration.uuidsActive;		
+		} else {				
+			this.attributeName = "ATTRIBUTE";
+			this.feature = "Feature";
+			this.ontologyNS = "http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#";
+			this.ontologyNSPrefix = "ontprefix";
+			this.resourceNS = "http://geo.linkeddata.es/resource/";    
+			this.resourceNSPrefix = "georesource";
+			this.language = "es";
+			this.pathCSV = "null";
+			this.uuidsActive = false;
+		}
+	}
+		
 	/**
 	 * Checks the settings of this step and puts the findings in a remarks List.
 	 * @param remarks - The list to put the remarks in @see org.pentaho.di.core.CheckResult
@@ -265,6 +297,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 			this.resourceNS = rep.getStepAttributeString(id_step, "resourcens");
 			this.resourceNSPrefix = rep.getStepAttributeString(id_step, "resourcensprefix");
 			this.language = rep.getStepAttributeString(id_step, "language");
+			this.pathCSV = rep.getStepAttributeString(id_step, "pathcsv");
 			this.uuidsActive = rep.getStepAttributeBoolean(id_step, "uuidsactive");			
 			if (this.language == null) { this.language = ""; }
 			if (this.ontologyNSPrefix == null) { this.ontologyNSPrefix = ""; }
@@ -290,7 +323,8 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 			rep.saveStepAttribute(id_transformation, id_step, "ontologynsprefix", this.ontologyNSPrefix);
 			rep.saveStepAttribute(id_transformation, id_step, "resourcens", this.resourceNS);
 			rep.saveStepAttribute(id_transformation, id_step, "resourcensprefix", this.resourceNSPrefix);
-			rep.saveStepAttribute(id_transformation, id_step, "language", this.language);   
+			rep.saveStepAttribute(id_transformation, id_step, "language", this.language);
+			rep.saveStepAttribute(id_transformation, id_step, "pathcsv", this.pathCSV);
 			rep.saveStepAttribute(id_transformation, id_step, "uuidsactive", this.uuidsActive);
 		} catch (Exception e) {
 			throw new KettleException(BaseMessages.getString(PKG.getName(), 
@@ -320,6 +354,9 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 
 	public String getLanguage(){ return this.language; }	  
 	public void setLanguage(String language){ this.language = language; }
+	
+	public String getPathCSV() { return this.pathCSV; }
+	public void setPathCSV(String pathCSV) { this.pathCSV = pathCSV; }
 
 	public boolean isUuidsActive() { return this.uuidsActive; }
 	public void setUuidsActive(boolean uuidsActive) { this.uuidsActive = uuidsActive; }

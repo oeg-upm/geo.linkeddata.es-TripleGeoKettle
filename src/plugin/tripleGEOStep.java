@@ -73,8 +73,23 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 		if (this.first){
 			this.first = false;
 
-			this.shpToRDF = new ShpToRDF(this.meta);  	   	
-
+			// Check CSV file 
+			Boolean flag_csv = false;
+			ClassesCSV[] classes = null;
+			CSV csv = null;
+			if (!this.meta.getPathCSV().equalsIgnoreCase("null")){
+				csv = new CSV(this.meta.getPathCSV());				
+				if (csv.exist()){					
+					classes = csv.read();
+					flag_csv = true;
+				} else {
+					flag_csv = false;
+					logBasic("The CSV file doesn't exist.");					
+				}				
+			}
+			
+			this.shpToRDF = new ShpToRDF(this.meta,flag_csv,classes,csv);			
+			
 			try {	
 				this.shpToRDF.getModelFromConfiguration(); // Init RDF	    		
 			} catch (Throwable t) {
@@ -89,8 +104,9 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 				logBasic("Attribute not found (check your tripleGEO settings and restart columns)");
 				throw new KettleException("tripleGEO.Exception.AttributesNotFound: Check your tripleGEO "
 						+ "settings and restart columns.");
-			}    	
-
+			}
+						
+			
 			if ((this.meta.getAttributeName() != null) && (!this.meta.getAttributeName().isEmpty())){
 				RowMetaInterface rm = this.data.outputRowMeta;
 
@@ -100,12 +116,12 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 
 					// Check columns
 					if (this.meta.getColumns() != null){
-						flag = 0;	    		    			
-						for (ColumnDefinition c : this.meta.getColumns()) {	    				
-							if (c.getColumn().equalsIgnoreCase(vmeta.getName())
+						flag = 0;
+						for (ColumnDefinition c : this.meta.getColumns()) {
+							if (c.getColumn_shp().equalsIgnoreCase(vmeta.getName())
 									|| vmeta.getName().equalsIgnoreCase(Constants.outputField)){
 								flag++;
-							}    				
+							}
 						}	    			
 						if (flag == 0){
 							logBasic("Attribute not found (check your tripleGEO settings and restart columns)");
@@ -120,7 +136,7 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 
 					if (vmeta.getName().equalsIgnoreCase(Constants.the_geom)) {
 						this.shpToRDF.setPosGeometry(pos);
-					}   
+					}
 
 					pos++;
 				}
