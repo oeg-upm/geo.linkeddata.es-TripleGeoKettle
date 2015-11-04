@@ -2,6 +2,7 @@ package plugin;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.swt.widgets.Shell;
@@ -50,6 +51,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 	private boolean uuidsActive = false;
 	private FieldDefinition[] fields;
 	private ColumnDefinition[] columns;
+	private ArrayList<String> column_name;
 
 	public tripleGEOStepMeta() {}	
 
@@ -366,6 +368,9 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 
 	public ColumnDefinition[] getColumns() { return this.columns; }
 	public void setColumns(ColumnDefinition[] columns) { this.columns = columns; }	
+	
+	public ArrayList<String> getColumn_name() { return this.column_name; }
+	public void setColumn_name(ArrayList<String> column_name) { this.column_name = column_name; }
 
 }
 

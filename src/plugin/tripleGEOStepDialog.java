@@ -36,6 +36,7 @@ import org.pentaho.di.ui.trans.step.BaseStepDialog;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * This interface is used to launch Step Dialogs. All dialogs that implement this simple interface 
@@ -110,8 +111,6 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	private CTabItem wMainTab;
 
 	private TransMeta trans;
-	
-	private ColumnDefinition[] columns;
 
 	/**
 	 * Instantiates a new base step dialog.
@@ -502,10 +501,8 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wFields.setRowNums();
 		this.wFields.optWidth(true);		
 
-		columns = this.input.getColumns();	
-		if ((columns != null && this.trans.haveHopsChanged()) || (columns == null)){
-			loadColumns();
-		} else if (columns != null || (columns != null && !this.trans.haveHopsChanged())) {
+		ColumnDefinition[] columns = this.input.getColumns();
+		if (columns != null || (columns != null && !this.trans.haveHopsChanged())) {
 			for (ColumnDefinition c : columns) {
 				TableItem item = new TableItem(this.wColumns.table, SWT.NONE);
 				int colnr = 1;
@@ -519,7 +516,10 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 					item.setText(colnr++, Const.NVL(c.uri, ""));
 				}
 			}
+		} else if ((columns != null && this.trans.haveHopsChanged()) || (columns == null)){
+			loadColumns();
 		}
+		
 		this.wColumns.removeEmptyRows();
 		this.wColumns.setRowNums();
 		this.wColumns.optWidth(true);
@@ -529,8 +529,8 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	 * Let the tripleGEOStepMeta know about the entered data
 	 * @throws KettleValueException 
 	 */
-	private void ok() {	
-		this.stepname = this.wStepname.getText();
+	private void ok() {
+		this.stepname = this.wStepname.getText();		
 
 		if (!isEmpty(this.wAttributeName.getText())) {
 			this.input.setAttributeName(this.wAttributeName.getText());
@@ -595,7 +595,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wFields.optWidth(true);		
 
 		int nrNonEmptyColumns = this.wColumns.nrNonEmpty();	
-		columns = new ColumnDefinition[nrNonEmptyColumns];
+		ColumnDefinition[] columns = new ColumnDefinition[nrNonEmptyColumns];
 		for (int i = 0; i < nrNonEmptyColumns; i++) {
 			TableItem item = this.wColumns.getNonEmpty(i);
 			columns[i] = new ColumnDefinition();
@@ -627,25 +627,20 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 				columns[i].uri = null;
 			}			
 		}	
-		
-		int j = 0;
-		RowMetaInterface rm;
-		try {
-			rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));
-			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
-				columns[j].column_shp = vmeta.getName();
+	
+		if (nrNonEmptyColumns > 0){	
+			this.input.setColumns(columns);
+			int j = 0;			
+			for (String c : this.input.getColumn_name()) {
+				columns[j].column_shp = c;
+				System.out.println(columns[j].column_shp);
 				if (columns[j].column.equalsIgnoreCase("empty")){
-					columns[j].column = vmeta.getName();
-				}			
+					columns[j].column = c;
+				}
 				j++;
 			}
-		} catch (KettleStepException e) {
-			e.printStackTrace();
 		}
 		
-		if (nrNonEmptyColumns > 0){			
-			this.input.setColumns(columns);
-		}
 		this.wColumns.removeEmptyRows();
 		this.wColumns.setRowNums();
 		this.wColumns.optWidth(true);		
@@ -707,8 +702,9 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	 * Load columns shapefile
 	 */
 	private void loadColumns() {		
-		try {
-			RowMetaInterface rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));	
+		try {			
+			ArrayList<String> column_name = new ArrayList<String>();			
+			RowMetaInterface rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));				
 			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
 				TableItem item = new TableItem(this.wColumns.table, 0);
 				item.setText(1, "YES");
@@ -717,7 +713,11 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 					item.setText(3, "n/a");
 					item.setText(4, "n/a");		
 				}
-			}
+				column_name.add(vmeta.getName());
+			}			
+
+			this.input.setColumn_name(column_name);
+			
 			this.wColumns.removeEmptyRows();
 			this.wColumns.setRowNums();
 			this.wColumns.optWidth(true);			
