@@ -604,8 +604,13 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			if (i == 0){
 				columns[i].column = "the_geom";
 				colnr++;
-			} else {
-				columns[i].column = item.getText(colnr++);
+			} else {			
+				String col = item.getText(colnr++);
+				if (!isEmpty(col)) {			
+					columns[i].column = col;
+				} else {
+					columns[i].column = "empty";
+				}
 			}			
 			columns[i].prefix = item.getText(colnr++);
 			@SuppressWarnings("unused")
@@ -629,6 +634,9 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));
 			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
 				columns[j].column_shp = vmeta.getName();
+				if (columns[j].column.equalsIgnoreCase("empty")){
+					columns[j].column = vmeta.getName();
+				}			
 				j++;
 			}
 		} catch (KettleStepException e) {
@@ -700,14 +708,11 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	 */
 	private void loadColumns() {		
 		try {
-			int j = 0;
 			RowMetaInterface rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));	
 			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
 				TableItem item = new TableItem(this.wColumns.table, 0);
 				item.setText(1, "YES");
 				item.setText(2, vmeta.getName());
-				columns[j].column_shp = vmeta.getName();
-				j++;
 				if (vmeta.getName().equalsIgnoreCase(Constants.the_geom)){
 					item.setText(3, "n/a");
 					item.setText(4, "n/a");		

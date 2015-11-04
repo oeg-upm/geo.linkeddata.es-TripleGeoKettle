@@ -118,9 +118,17 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 					if (this.meta.getColumns() != null){
 						flag = 0;
 						for (ColumnDefinition c : this.meta.getColumns()) {
-							if (c.getColumn_shp().equalsIgnoreCase(vmeta.getName())
-									|| vmeta.getName().equalsIgnoreCase(Constants.outputField)){
-								flag++;
+							if (c.getColumn_shp() != null){
+								if (c.getColumn_shp().equalsIgnoreCase(vmeta.getName())
+										|| vmeta.getName().equalsIgnoreCase(Constants.outputField)){
+									flag++;
+								}
+							} else {
+								if (c.getColumn().equalsIgnoreCase(vmeta.getName())
+										|| vmeta.getName().equalsIgnoreCase(Constants.outputField)){
+									c.setColumn_shp(vmeta.getName());
+									flag++;
+								}								
 							}
 						}	    			
 						if (flag == 0){
