@@ -13,12 +13,12 @@
 				</ul>
 				<h2><a name="installation" class="anchor" href="#Installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 				<ol>
-					<li>Download the attachment <code>tripleGeoplugin.zip</code> and unzip it in the <code>plugins/steps/</code> directory of Geokettle.</li>
-					<li>Download the attachment <code>libTripleGEO.zip</code> and unzip it in the <code>lib/</code> directory of Geokettle.</li>
-					<li>Now, you must edit the file <code>*.sh</code>:<br/>
+					<li>Download the attachment <a href="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/raw/master/download/tripleGeoplugin.zip"><code>tripleGeoplugin.zip</code></a> and unzip it in the <code>plugins/steps/</code> directory of Geokettle.</li>
+					<li>Download the attachment <a href="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/raw/master/download/libTripleGEO.zip"><code>libTripleGEO.zip</code></a> and unzip it in the <code>lib/</code> directory of Geokettle.</li>
+					<li>Now, you must edit the file <code>&#42;.sh</code>:<br/>
 						<ul>
 							<li>In the section <code>Libraries used by Kettle</code> add the following lines:<br/>
-								<code>for file in $BASEDIR/lib/libTripleGEO/*.jar</code><br/>
+								<code>for file in $BASEDIR/lib/libTripleGEO/&#42;.jar</code><br/>
 								<code>do</code><br/>
 									 &nbsp; &nbsp; &nbsp;<code>CLASSPATH=$CLASSPATH:$file</code><br/>
 								<code>done</code>
