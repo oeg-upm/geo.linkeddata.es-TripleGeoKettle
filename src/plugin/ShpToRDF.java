@@ -153,7 +153,10 @@ public class ShpToRDF {
 
 		if (this.uuidsActive){	
 			// Generate UUIDs (Universally Unique Identifiers)
-			encodingResource = UUID.nameUUIDFromBytes(featureAttribute.getBytes()).toString();		        	
+			encodingResource = UUID.nameUUIDFromBytes(featureAttribute.getBytes()).toString();
+			if (encodingResource.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
+				encodingResource = "_" + encodingResource;
+			}
 		} else {
 			encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
 					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));			

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!-- Ontology Engineering Group -->
+<!-- Author: Rosangelis Garcia -->
+<!-- Author: Alejandro F. Carrera -->
+	
+<project name="tripleGEOStep" default="dist" basedir="..">
+	<presetdef name="my-javac">
+    	<javac includeantruntime="false" />
+  	</presetdef>
+	
+	<description>
+        Build file for the TripleGEO Plugin Step
+    </description>
+	
+	<property name="kettle-package" value="tripleGEO.jar"/>
+	<property name="kettle-package-base" value="tripleGEObase.jar"/>
+	<property name="kettle-package-name" value="tripleGeoplugin"/>
+	<property name="java-version" value="1.8"/>
+	
+	<!-- change these to adapt to your environment -->
+	<!-- Mac OS Configuration -->
+	<!--<property name="kettle-dir" location="/Applications/GeoKettle.app/Contents/Resources/Java"/>-->
+	<!--<property name="kettle-swt-dir" location="${kettle-dir}/libswt/osx"/>-->
+	
+	<!-- Windows OS Configuration -->
+	<!-- <property name="kettle-dir" location=""/> -->
+	<!-- <property name="swt-jar" location="${kettle-dir}/"/> -->
+	
+	<!-- Linux / Unix OS Configuration -->
+	<property name="kettle-dir" location="/opt/geokettle"/>
+	<property name="kettle-swt-dir" location="${kettle-dir}/libswt/linux/x86_64"/>
+	
+	<!-- SWT GeoKettle -->
+	<property name="kettle-swt-jar" location="${kettle-swt-dir}/swt.jar"/>
+	
+	<!-- Detect folder and libraries -->
+	<available file="${kettle-swt-jar}" property="swt-jar.present"/>
+	<available file="${kettle-dir}" type="dir" property="kettle-dir.present"/>
+	<fail unless="swt-jar.present" message="please specify a valid swt-jar"/>
+	<fail unless="kettle-dir.present" message="please specify the path geokettle"/>
+	
+	<!-- set global properties for this build -->
+	<property name="src.folder" location="src"/>
+	<property name="classes.folder" location="classes"/>
+	<property name="dist.folder" location="dist"/>
+	<property name="dist.lib" location="${dist.folder}/lib"/>
+	<property name="store.jar" value="${dist.folder}/${kettle-package}"/>
+	<property name="store_base.jar" value="${dist.folder}/${kettle-package-base}"/>
+	<target name="init">
+		<tstamp/>
+		<delete dir="${classes.folder}"/>
+		<delete dir="${dist.folder}"/>
+		<mkdir dir="${dist.folder}"/>
+		<mkdir dir="${dist.lib}"/>
+		
+		<!-- Copy libraries -->
+		<copy todir="${dist.lib}">
+			<fileset dir="lib" includes="*.jar"/>
+		</copy>
+		<copy todir="${dist.lib}">
+			<fileset dir="${kettle-dir}/lib" includes="*.jar"/>
+		</copy>
+		<copy todir="${dist.lib}">
+			<fileset dir="${kettle-swt-dir}" includes="*.jar"/>
+		</copy>
+	</target>
+	
+	<!-- Generate classpath -->
+	<path id="class.path">
+		<fileset dir="${dist.lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- Compile -->
+	<target name="compile" depends="init" description="compile the source ">
+		<echo message="Compiling at java ${java-version}"/>
+		<mkdir dir="${classes.folder}"/>
+		<my-javac target="${java-version}" srcdir="${src.folder}" destdir="${classes.folder}" debug="true">
+			<classpath refid="class.path"/>
+		</my-javac>
+	</target>
+
+	<!-- Create package for GeoKettle -->
+	<target name="dist" depends="compile" description="generate the distribution">
+		<echo message="Packaging into a single JAR at ${store.jar}"/>
+		<copy todir="${classes.folder}">
+			<fileset dir="${src.folder}" includes="**/*.properties"/>
+		</copy>
+		<copy todir="${dist.folder}">
+			<fileset dir="distrib" includes="*.*"/>
+		</copy>
+		<jar jarfile="${store_base.jar}" basedir="${classes.folder}"/>
+	    <jar destfile="${dist.folder}/temp.jar" filesetmanifest="skip">
+	    	<zipgroupfileset dir="${dist.folder}" includes="*.jar"/>
+	    	<zipgroupfileset dir="${dist.lib}" includes="*.jar"/>
+	        <manifest>
+	            <attribute name="Main-Class" value="${main.class}"/>
+	        </manifest>
+	    </jar>
+	    <zip destfile="${store.jar}">
+	        <zipfileset src="${dist.folder}/temp.jar"
+	        excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
+	    </zip>
+	    <delete file="${dist.folder}/temp.jar"/>
+		<delete file="${store_base.jar}"/>
+		<delete dir="${dist.lib}"/>
+	</target>
+	
+	<!-- Put package at GeoKettle installation folder -->
+	<target name="install" depends="dist" description="install into local kettle">
+		<delete dir="${kettle-dir}/plugins/steps/${kettle-package-name}"/>
+		<mkdir dir="${kettle-dir}/plugins/steps/${kettle-package-name}"/>
+		<copy todir="${kettle-dir}/plugins/steps/${kettle-package-name}">
+			<fileset dir="${dist.folder}" includes="**/*.*"/>
+		</copy>
+	</target>
+</project>

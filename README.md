@@ -14,18 +14,6 @@
 				<h2><a name="installation" class="anchor" href="#Installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 				<ol>
 					<li>Download the attachment <a href="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/raw/master/download/tripleGeoplugin.zip"><code>tripleGeoplugin.zip</code></a> and unzip it in the <code>plugins/steps/</code> directory of Geokettle.</li>
-					<li>Download the attachment <a href="https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/raw/master/download/libTripleGEO.zip"><code>libTripleGEO.zip</code></a> and unzip it in the <code>lib/</code> directory of Geokettle.</li>
-					<li>Now, you must edit the file <code>&#42;.sh</code>:<br/>
-						<ul>
-							<li>In the section <code>Libraries used by Kettle</code> add the following lines:<br/>
-								<code>for file in $BASEDIR/lib/libTripleGEO/&#42;.jar</code><br/>
-								<code>do</code><br/>
-									 &nbsp; &nbsp; &nbsp;<code>CLASSPATH=$CLASSPATH:$file</code><br/>
-								<code>done</code>
-							</li>
-							<li>In the section <code>Set java runtime options</code> switch <code>-Xmx512m</code> to <code>-Xmx3072m</code>.</li>
-						</ul>
-					</li>
 					<li>You are now ready to start using the tripleGEO plugin.</li>
 				</ol>
 				<h2><a name="screenshot" class="anchor" href="#Screenshot"><span class="octicon octicon-link"></span></a>Screenshot</h2>
