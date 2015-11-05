@@ -1,0 +1,984 @@
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf:    <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix esadm: <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#> .
+@prefix georesource: <http://geo.linkeddata.es/resource/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix dc:    <http://purl.org/dc/terms/> .
+
+georesource:hellin  a           esadm:Barrio ;
+        rdfs:label              "Hellín"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/2" ;
+        georesource:locales     "91"^^xsd:int ;
+        georesource:numberdata  "9"^^xsd:int ;
+        georesource:poblacion   "9178"^^xsd:int .
+
+georesource:rios-rosas
+        a                       esadm:Barrio ;
+        rdfs:label              "Ríos Rosas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/07/Barrio/5" ;
+        georesource:locales     "1284"^^xsd:int ;
+        georesource:numberdata  "215"^^xsd:int ;
+        georesource:poblacion   "27661"^^xsd:int .
+
+georesource:pinar-del-rey
+        a                       esadm:Barrio ;
+        rdfs:label              "Pinar del Rey"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/16/Barrio/4" ;
+        georesource:locales     "2183"^^xsd:int ;
+        georesource:numberdata  "155"^^xsd:int ;
+        georesource:poblacion   "55183"^^xsd:int .
+
+georesource:portazgo  a         esadm:Barrio ;
+        rdfs:label              "Portazgo"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/13/Barrio/5" ;
+        georesource:locales     "1277"^^xsd:int ;
+        georesource:numberdata  "111"^^xsd:int ;
+        georesource:poblacion   "29185"^^xsd:int .
+
+georesource:san-diego
+        a                       esadm:Barrio ;
+        rdfs:label              "San Diego"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/13/Barrio/2" ;
+        georesource:locales     "2556"^^xsd:int ;
+        georesource:numberdata  "195"^^xsd:int ;
+        georesource:poblacion   "41219"^^xsd:int .
+
+georesource:recoletos
+        a                       esadm:Barrio ;
+        rdfs:label              "Recoletos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/04/Barrio/1" ;
+        georesource:locales     "1437"^^xsd:int ;
+        georesource:numberdata  "193"^^xsd:int ;
+        georesource:poblacion   "15444"^^xsd:int .
+
+georesource:arapiles  a         esadm:Barrio ;
+        rdfs:label              "Arapiles"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/07/Barrio/2" ;
+        georesource:locales     "1222"^^xsd:int ;
+        georesource:numberdata  "155"^^xsd:int ;
+        georesource:poblacion   "25024"^^xsd:int .
+
+georesource:los-angeles
+        a                       esadm:Barrio ;
+        rdfs:label              "Los Ángeles"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/17/Barrio/5" ;
+        georesource:locales     "818"^^xsd:int ;
+        georesource:numberdata  "82"^^xsd:int ;
+        georesource:poblacion   "32030"^^xsd:int .
+
+georesource:quintana  a         esadm:Barrio ;
+        rdfs:label              "Quintana"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/3" ;
+        georesource:locales     "1622"^^xsd:int ;
+        georesource:numberdata  "128"^^xsd:int ;
+        georesource:poblacion   "25399"^^xsd:int .
+
+georesource:cuatro-caminos
+        a                       esadm:Barrio ;
+        rdfs:label              "Cuatro Caminos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/06/Barrio/2" ;
+        georesource:locales     "2124"^^xsd:int ;
+        georesource:numberdata  "282"^^xsd:int ;
+        georesource:poblacion   "34176"^^xsd:int .
+
+georesource:orcasitas
+        a                       esadm:Barrio ;
+        rdfs:label              "Orcasitas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/1" ;
+        georesource:locales     "356"^^xsd:int ;
+        georesource:numberdata  "45"^^xsd:int ;
+        georesource:poblacion   "22361"^^xsd:int .
+
+georesource:valdezarza
+        a                       esadm:Barrio ;
+        rdfs:label              "Valdezarza"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/4" ;
+        georesource:locales     "809"^^xsd:int ;
+        georesource:numberdata  "62"^^xsd:int ;
+        georesource:poblacion   "30445"^^xsd:int .
+
+georesource:casa-de-campo
+        a                       esadm:Barrio ;
+        rdfs:label              "Casa de Campo"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/1" ;
+        georesource:locales     "629"^^xsd:int ;
+        georesource:numberdata  "92"^^xsd:int ;
+        georesource:poblacion   "12539"^^xsd:int .
+
+georesource:jeronimos
+        a                       esadm:Barrio ;
+        rdfs:label              "Jerónimos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/03/Barrio/5" ;
+        georesource:locales     "289"^^xsd:int ;
+        georesource:numberdata  "58"^^xsd:int ;
+        georesource:poblacion   "7123"^^xsd:int .
+
+georesource:gaztambide
+        a                       esadm:Barrio ;
+        rdfs:label              "Gaztambide"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/07/Barrio/1" ;
+        georesource:locales     "1461"^^xsd:int ;
+        georesource:numberdata  "205"^^xsd:int ;
+        georesource:poblacion   "23382"^^xsd:int .
+
+georesource:valdeacederas
+        a                       esadm:Barrio ;
+        rdfs:label              "Valdeacederas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/06/Barrio/5" ;
+        georesource:locales     "1528"^^xsd:int ;
+        georesource:numberdata  "81"^^xsd:int ;
+        georesource:poblacion   "25269"^^xsd:int .
+
+georesource:rejas  a            esadm:Barrio ;
+        rdfs:label              "Rejas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/6" ;
+        georesource:locales     "730"^^xsd:int ;
+        georesource:numberdata  "60"^^xsd:int ;
+        georesource:poblacion   "14189"^^xsd:int .
+
+georesource:legazpi  a          esadm:Barrio ;
+        rdfs:label              "Legazpi"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/4" ;
+        georesource:locales     "430"^^xsd:int ;
+        georesource:numberdata  "60"^^xsd:int ;
+        georesource:poblacion   "17052"^^xsd:int .
+
+georesource:prosperidad
+        a                       esadm:Barrio ;
+        rdfs:label              "Prosperidad"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/05/Barrio/2" ;
+        georesource:locales     "1552"^^xsd:int ;
+        georesource:numberdata  "182"^^xsd:int ;
+        georesource:poblacion   "37432"^^xsd:int .
+
+georesource:piovera  a          esadm:Barrio ;
+        rdfs:label              "Piovera"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/16/Barrio/2" ;
+        georesource:locales     "239"^^xsd:int ;
+        georesource:numberdata  "34"^^xsd:int ;
+        georesource:poblacion   "14681"^^xsd:int .
+
+georesource:la-chopera
+        a                       esadm:Barrio ;
+        rdfs:label              "La Chopera"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/3" ;
+        georesource:locales     "785"^^xsd:int ;
+        georesource:numberdata  "89"^^xsd:int ;
+        georesource:poblacion   "20690"^^xsd:int .
+
+georesource:el-viso  a          esadm:Barrio ;
+        rdfs:label              "El Viso"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/05/Barrio/1" ;
+        georesource:locales     "828"^^xsd:int ;
+        georesource:numberdata  "103"^^xsd:int ;
+        georesource:poblacion   "16801"^^xsd:int .
+
+georesource:hispanoamerica
+        a                       esadm:Barrio ;
+        rdfs:label              "Hispanoamérica"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/05/Barrio/4" ;
+        georesource:locales     "1382"^^xsd:int ;
+        georesource:numberdata  "194"^^xsd:int ;
+        georesource:poblacion   "31448"^^xsd:int .
+
+georesource:guindalera
+        a                       esadm:Barrio ;
+        rdfs:label              "Guindalera"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/04/Barrio/4" ;
+        georesource:locales     "1635"^^xsd:int ;
+        georesource:numberdata  "180"^^xsd:int ;
+        georesource:poblacion   "41380"^^xsd:int .
+
+georesource:san-pascual
+        a                       esadm:Barrio ;
+        rdfs:label              "San Pascual"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/5" ;
+        georesource:locales     "742"^^xsd:int ;
+        georesource:numberdata  "66"^^xsd:int ;
+        georesource:poblacion   "18936"^^xsd:int .
+
+georesource:amposta  a          esadm:Barrio ;
+        rdfs:label              "Amposta"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/3" ;
+        georesource:locales     "386"^^xsd:int ;
+        georesource:numberdata  "41"^^xsd:int ;
+        georesource:poblacion   "8470"^^xsd:int .
+
+georesource:justicia  a         esadm:Barrio ;
+        rdfs:label              "Justicia"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/01/Barrio/4" ;
+        georesource:locales     "1783"^^xsd:int ;
+        georesource:numberdata  "435"^^xsd:int ;
+        georesource:poblacion   "17051"^^xsd:int .
+
+georesource:delicias  a         esadm:Barrio ;
+        rdfs:label              "Delicias"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/5" ;
+        georesource:locales     "807"^^xsd:int ;
+        georesource:numberdata  "103"^^xsd:int ;
+        georesource:poblacion   "27350"^^xsd:int .
+
+georesource:alameda-de-osuna
+        a                       esadm:Barrio ;
+        rdfs:label              "Alameda de Osuna"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/21/Barrio/1" ;
+        georesource:locales     "412"^^xsd:int ;
+        georesource:numberdata  "46"^^xsd:int ;
+        georesource:poblacion   "20085"^^xsd:int .
+
+georesource:sol  a              esadm:Barrio ;
+        rdfs:label              "Sol"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/01/Barrio/6" ;
+        georesource:locales     "1462"^^xsd:int ;
+        georesource:numberdata  "372"^^xsd:int ;
+        georesource:poblacion   "7845"^^xsd:int .
+
+georesource:trafalgar
+        a                       esadm:Barrio ;
+        rdfs:label              "Trafalgar"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/07/Barrio/3" ;
+        georesource:locales     "1585"^^xsd:int ;
+        georesource:numberdata  "236"^^xsd:int ;
+        georesource:poblacion   "25172"^^xsd:int .
+
+georesource:estrella  a         esadm:Barrio ;
+        rdfs:label              "Estrella"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/03/Barrio/3" ;
+        georesource:locales     "396"^^xsd:int ;
+        georesource:numberdata  "36"^^xsd:int ;
+        georesource:poblacion   "23800"^^xsd:int .
+
+georesource:timon  a            esadm:Barrio ;
+        rdfs:label              "Timón"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/21/Barrio/4" ;
+        georesource:locales     "234"^^xsd:int ;
+        georesource:numberdata  "33"^^xsd:int ;
+        georesource:poblacion   "9069"^^xsd:int .
+
+georesource:casco-historico-de-barajas
+        a                       esadm:Barrio ;
+        rdfs:label              "Casco Histórico de Barajas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/21/Barrio/3" ;
+        georesource:locales     "441"^^xsd:int ;
+        georesource:numberdata  "69"^^xsd:int ;
+        georesource:poblacion   "7835"^^xsd:int .
+
+georesource:entrevias
+        a                       esadm:Barrio ;
+        rdfs:label              "Entrevías"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/13/Barrio/1" ;
+        georesource:locales     "1305"^^xsd:int ;
+        georesource:numberdata  "121"^^xsd:int ;
+        georesource:poblacion   "34620"^^xsd:int .
+
+georesource:berruguete
+        a                       esadm:Barrio ;
+        rdfs:label              "Berruguete"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/06/Barrio/6" ;
+        georesource:locales     "1205"^^xsd:int ;
+        georesource:numberdata  "87"^^xsd:int ;
+        georesource:poblacion   "24419"^^xsd:int .
+
+georesource:san-andres
+        a                       esadm:Barrio ;
+        rdfs:label              "San Andrés"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/17/Barrio/1" ;
+        georesource:locales     "3752"^^xsd:int ;
+        georesource:numberdata  "157"^^xsd:int ;
+        georesource:poblacion   "44263"^^xsd:int .
+
+georesource:palacio  a          esadm:Barrio ;
+        rdfs:label              "Palacio"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/01/Barrio/1" ;
+        georesource:locales     "1859"^^xsd:int ;
+        georesource:numberdata  "518"^^xsd:int ;
+        georesource:poblacion   "22949"^^xsd:int .
+
+georesource:embajadores
+        a                       esadm:Barrio ;
+        rdfs:label              "Embajadores"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/01/Barrio/2" ;
+        georesource:locales     "3361"^^xsd:int ;
+        georesource:numberdata  "358"^^xsd:int ;
+        georesource:poblacion   "48529"^^xsd:int .
+
+georesource:arguelles
+        a                       esadm:Barrio ;
+        rdfs:label              "Argüelles"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/2" ;
+        georesource:locales     "1254"^^xsd:int ;
+        georesource:numberdata  "201"^^xsd:int ;
+        georesource:poblacion   "24338"^^xsd:int .
+
+georesource:santa-eugenia
+        a                       esadm:Barrio ;
+        rdfs:label              "Santa Eugenia"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/18/Barrio/2" ;
+        georesource:locales     "485"^^xsd:int ;
+        georesource:numberdata  "45"^^xsd:int ;
+        georesource:poblacion   "25560"^^xsd:int .
+
+georesource:ciudad-jardin
+        a                       esadm:Barrio ;
+        rdfs:label              "Ciudad Jardín"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/05/Barrio/3" ;
+        georesource:locales     "1184"^^xsd:int ;
+        georesource:numberdata  "124"^^xsd:int ;
+        georesource:poblacion   "18533"^^xsd:int .
+
+georesource:fuentelarreina
+        a                       esadm:Barrio ;
+        rdfs:label              "Fuentelarreina"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/2" ;
+        georesource:locales     "18"^^xsd:int ;
+        georesource:numberdata  "1"^^xsd:int ;
+        georesource:poblacion   "3194"^^xsd:int .
+
+georesource:numancia  a         esadm:Barrio ;
+        rdfs:label              "Numancia"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/13/Barrio/6" ;
+        georesource:locales     "1947"^^xsd:int ;
+        georesource:numberdata  "168"^^xsd:int ;
+        georesource:poblacion   "48130"^^xsd:int .
+
+georesource:lucero  a           esadm:Barrio ;
+        rdfs:label              "Lucero"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/3" ;
+        georesource:locales     "1205"^^xsd:int ;
+        georesource:numberdata  "100"^^xsd:int ;
+        georesource:poblacion   "36975"^^xsd:int .
+
+georesource:el-salvador
+        a                       esadm:Barrio ;
+        rdfs:label              "El Salvador"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/8" ;
+        georesource:locales     "273"^^xsd:int ;
+        georesource:numberdata  "27"^^xsd:int ;
+        georesource:poblacion   "11923"^^xsd:int .
+
+georesource:ventas  a           esadm:Barrio ;
+        rdfs:label              "Ventas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/1" ;
+        georesource:locales     "2506"^^xsd:int ;
+        georesource:numberdata  "162"^^xsd:int ;
+        georesource:poblacion   "50101"^^xsd:int .
+
+georesource:aeropuerto
+        a                       esadm:Barrio ;
+        rdfs:label              "Aeropuerto"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/21/Barrio/2" ;
+        georesource:locales     "308"^^xsd:int ;
+        georesource:numberdata  "64"^^xsd:int ;
+        georesource:poblacion   "2065"^^xsd:int .
+
+georesource:zofio  a            esadm:Barrio ;
+        rdfs:label              "Zofío"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/6" ;
+        georesource:locales     "581"^^xsd:int ;
+        georesource:numberdata  "45"^^xsd:int ;
+        georesource:poblacion   "13840"^^xsd:int .
+
+georesource:ibiza  a            esadm:Barrio ;
+        rdfs:label              "Ibiza"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/03/Barrio/4" ;
+        georesource:locales     "912"^^xsd:int ;
+        georesource:numberdata  "141"^^xsd:int ;
+        georesource:poblacion   "22045"^^xsd:int .
+
+georesource:campamento
+        a                       esadm:Barrio ;
+        rdfs:label              "Campamento"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/5" ;
+        georesource:locales     "665"^^xsd:int ;
+        georesource:numberdata  "48"^^xsd:int ;
+        georesource:poblacion   "19819"^^xsd:int .
+
+georesource:casco-historico-de-vallecas
+        a                       esadm:Barrio ;
+        rdfs:label              "Casco Histórico de Vallecas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/18/Barrio/1" ;
+        georesource:locales     "2694"^^xsd:int ;
+        georesource:numberdata  "160"^^xsd:int ;
+        georesource:poblacion   "69286"^^xsd:int .
+
+georesource:aravaca  a          esadm:Barrio ;
+        rdfs:label              "Aravaca"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/7" ;
+        georesource:locales     "572"^^xsd:int ;
+        georesource:numberdata  "48"^^xsd:int ;
+        georesource:poblacion   "25483"^^xsd:int .
+
+georesource:los-carmenes
+        a                       esadm:Barrio ;
+        rdfs:label              "Los Cármenes"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/1" ;
+        georesource:locales     "600"^^xsd:int ;
+        georesource:numberdata  "37"^^xsd:int ;
+        georesource:poblacion   "17525"^^xsd:int .
+
+georesource:las-aguilas
+        a                       esadm:Barrio ;
+        rdfs:label              "Las Águilas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/7" ;
+        georesource:locales     "1369"^^xsd:int ;
+        georesource:numberdata  "139"^^xsd:int ;
+        georesource:poblacion   "53915"^^xsd:int .
+
+georesource:imperial  a         esadm:Barrio ;
+        rdfs:label              "Imperial"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/1" ;
+        georesource:locales     "729"^^xsd:int ;
+        georesource:numberdata  "93"^^xsd:int ;
+        georesource:poblacion   "23109"^^xsd:int .
+
+georesource:atalaya  a          esadm:Barrio ;
+        rdfs:label              "Atalaya"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/8" ;
+        georesource:locales     "36"^^xsd:int ;
+        georesource:numberdata  "4"^^xsd:int ;
+        georesource:poblacion   "1666"^^xsd:int .
+
+georesource:valdefuentes
+        a                       esadm:Barrio ;
+        rdfs:label              "Valdefuentes"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/16/Barrio/6" ;
+        georesource:locales     "738"^^xsd:int ;
+        georesource:numberdata  "73"^^xsd:int ;
+        georesource:poblacion   "39701"^^xsd:int .
+
+georesource:almagro  a          esadm:Barrio ;
+        rdfs:label              "Almagro"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/07/Barrio/4" ;
+        georesource:locales     "1081"^^xsd:int ;
+        georesource:numberdata  "187"^^xsd:int ;
+        georesource:poblacion   "19755"^^xsd:int .
+
+georesource:vinateros
+        a                       esadm:Barrio ;
+        rdfs:label              "Vinateros"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/14/Barrio/6" ;
+        georesource:locales     "342"^^xsd:int ;
+        georesource:numberdata  "29"^^xsd:int ;
+        georesource:poblacion   "17779"^^xsd:int .
+
+georesource:nueva-espana
+        a                       esadm:Barrio ;
+        rdfs:label              "Nueva España"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/05/Barrio/5" ;
+        georesource:locales     "779"^^xsd:int ;
+        georesource:numberdata  "108"^^xsd:int ;
+        georesource:poblacion   "23744"^^xsd:int .
+
+georesource:pavones  a          esadm:Barrio ;
+        rdfs:label              "Pavones"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/14/Barrio/1" ;
+        georesource:locales     "201"^^xsd:int ;
+        georesource:numberdata  "18"^^xsd:int ;
+        georesource:poblacion   "9370"^^xsd:int .
+
+georesource:palomeras-sureste
+        a                       esadm:Barrio ;
+        rdfs:label              "Palomeras Sureste"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/13/Barrio/4" ;
+        georesource:locales     "1275"^^xsd:int ;
+        georesource:numberdata  "111"^^xsd:int ;
+        georesource:poblacion   "43168"^^xsd:int .
+
+georesource:valdemarin
+        a                       esadm:Barrio ;
+        rdfs:label              "Valdemarín"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/5" ;
+        georesource:locales     "70"^^xsd:int ;
+        georesource:numberdata  "15"^^xsd:int ;
+        georesource:poblacion   "5989"^^xsd:int .
+
+georesource:atocha  a           esadm:Barrio ;
+        rdfs:label              "Atocha"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/7" ;
+        georesource:locales     "172"^^xsd:int ;
+        georesource:numberdata  "21"^^xsd:int ;
+        georesource:poblacion   "988"^^xsd:int .
+
+georesource:el-goloso
+        a                       esadm:Barrio ;
+        rdfs:label              "El Goloso"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/8" ;
+        georesource:locales     "369"^^xsd:int ;
+        georesource:numberdata  "40"^^xsd:int ;
+        georesource:poblacion   "13708"^^xsd:int .
+
+georesource:ambroz  a           esadm:Barrio ;
+        rdfs:label              "Ambroz"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/19/Barrio/2" ;
+        georesource:locales     "537"^^xsd:int ;
+        georesource:numberdata  "64"^^xsd:int ;
+        georesource:poblacion   "20093"^^xsd:int .
+
+georesource:el-pardo  a         esadm:Barrio ;
+        rdfs:label              "El Pardo"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/1" ;
+        georesource:locales     "154"^^xsd:int ;
+        georesource:numberdata  "32"^^xsd:int ;
+        georesource:poblacion   "3457"^^xsd:int .
+
+georesource:vista-alegre
+        a                       esadm:Barrio ;
+        rdfs:label              "Vista Alegre"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/4" ;
+        georesource:locales     "2971"^^xsd:int ;
+        georesource:numberdata  "263"^^xsd:int ;
+        georesource:poblacion   "46272"^^xsd:int .
+
+georesource:los-rosales
+        a                       esadm:Barrio ;
+        rdfs:label              "Los Rosales"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/17/Barrio/4" ;
+        georesource:locales     "1234"^^xsd:int ;
+        georesource:numberdata  "114"^^xsd:int ;
+        georesource:poblacion   "37816"^^xsd:int .
+
+georesource:san-fermin
+        a                       esadm:Barrio ;
+        rdfs:label              "San Fermín"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/3" ;
+        georesource:locales     "523"^^xsd:int ;
+        georesource:numberdata  "49"^^xsd:int ;
+        georesource:poblacion   "22779"^^xsd:int .
+
+georesource:palomas  a          esadm:Barrio ;
+        rdfs:label              "Palomas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/16/Barrio/1" ;
+        georesource:locales     "61"^^xsd:int ;
+        georesource:numberdata  "6"^^xsd:int ;
+        georesource:poblacion   "6747"^^xsd:int .
+
+georesource:buenavista
+        a                       esadm:Barrio ;
+        rdfs:label              "Buenavista"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/6" ;
+        georesource:locales     "1736"^^xsd:int ;
+        georesource:numberdata  "143"^^xsd:int ;
+        georesource:poblacion   "43689"^^xsd:int .
+
+georesource:goya  a             esadm:Barrio ;
+        rdfs:label              "Goya"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/04/Barrio/2" ;
+        georesource:locales     "1625"^^xsd:int ;
+        georesource:numberdata  "254"^^xsd:int ;
+        georesource:poblacion   "29634"^^xsd:int .
+
+georesource:almendrales
+        a                       esadm:Barrio ;
+        rdfs:label              "Almendrales"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/4" ;
+        georesource:locales     "970"^^xsd:int ;
+        georesource:numberdata  "80"^^xsd:int ;
+        georesource:poblacion   "21926"^^xsd:int .
+
+georesource:pradolongo
+        a                       esadm:Barrio ;
+        rdfs:label              "Pradolongo"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/7" ;
+        georesource:locales     "1074"^^xsd:int ;
+        georesource:numberdata  "87"^^xsd:int ;
+        georesource:poblacion   "17263"^^xsd:int .
+
+georesource:san-isidro
+        a                       esadm:Barrio ;
+        rdfs:label              "San Isidro"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/3" ;
+        georesource:locales     "1781"^^xsd:int ;
+        georesource:numberdata  "117"^^xsd:int ;
+        georesource:poblacion   "39533"^^xsd:int .
+
+georesource:nino-jesus
+        a                       esadm:Barrio ;
+        rdfs:label              "Niño Jesús"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/03/Barrio/6" ;
+        georesource:locales     "450"^^xsd:int ;
+        georesource:numberdata  "54"^^xsd:int ;
+        georesource:poblacion   "15675"^^xsd:int .
+
+georesource:castilla  a         esadm:Barrio ;
+        rdfs:label              "Castilla"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/05/Barrio/6" ;
+        georesource:locales     "499"^^xsd:int ;
+        georesource:numberdata  "78"^^xsd:int ;
+        georesource:poblacion   "16985"^^xsd:int .
+
+georesource:pacifico  a         esadm:Barrio ;
+        rdfs:label              "Pacífico"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/03/Barrio/1" ;
+        georesource:locales     "1225"^^xsd:int ;
+        georesource:numberdata  "134"^^xsd:int ;
+        georesource:poblacion   "34941"^^xsd:int .
+
+georesource:vallehermoso
+        a                       esadm:Barrio ;
+        rdfs:label              "Vallehermoso"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/07/Barrio/6" ;
+        georesource:locales     "705"^^xsd:int ;
+        georesource:numberdata  "99"^^xsd:int ;
+        georesource:poblacion   "20174"^^xsd:int .
+
+georesource:el-plantio
+        a                       esadm:Barrio ;
+        rdfs:label              "El Plantío"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/6" ;
+        georesource:locales     "177"^^xsd:int ;
+        georesource:numberdata  "28"^^xsd:int ;
+        georesource:poblacion   "2487"^^xsd:int .
+
+georesource:palomeras-bajas
+        a                       esadm:Barrio ;
+        rdfs:label              "Palomeras Bajas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/13/Barrio/3" ;
+        georesource:locales     "1125"^^xsd:int ;
+        georesource:numberdata  "90"^^xsd:int ;
+        georesource:poblacion   "40895"^^xsd:int .
+
+georesource:fuente-del-berro
+        a                       esadm:Barrio ;
+        rdfs:label              "Fuente del Berro"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/04/Barrio/3" ;
+        georesource:locales     "878"^^xsd:int ;
+        georesource:numberdata  "97"^^xsd:int ;
+        georesource:poblacion   "21609"^^xsd:int .
+
+georesource:orcasur  a          esadm:Barrio ;
+        rdfs:label              "Orcasur"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/2" ;
+        georesource:locales     "347"^^xsd:int ;
+        georesource:numberdata  "27"^^xsd:int ;
+        georesource:poblacion   "13280"^^xsd:int .
+
+georesource:mirasierra
+        a                       esadm:Barrio ;
+        rdfs:label              "Mirasierra"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/7" ;
+        georesource:locales     "294"^^xsd:int ;
+        georesource:numberdata  "33"^^xsd:int ;
+        georesource:poblacion   "28978"^^xsd:int .
+
+georesource:san-juan-bautista
+        a                       esadm:Barrio ;
+        rdfs:label              "San Juan Bautista"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/6" ;
+        georesource:locales     "407"^^xsd:int ;
+        georesource:numberdata  "51"^^xsd:int ;
+        georesource:poblacion   "12722"^^xsd:int .
+
+georesource:el-pilar  a         esadm:Barrio ;
+        rdfs:label              "El Pilar"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/4" ;
+        georesource:locales     "2059"^^xsd:int ;
+        georesource:numberdata  "222"^^xsd:int ;
+        georesource:poblacion   "47734"^^xsd:int .
+
+georesource:canillas  a         esadm:Barrio ;
+        rdfs:label              "Canillas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/16/Barrio/3" ;
+        georesource:locales     "1588"^^xsd:int ;
+        georesource:numberdata  "150"^^xsd:int ;
+        georesource:poblacion   "42436"^^xsd:int .
+
+georesource:castellana
+        a                       esadm:Barrio ;
+        rdfs:label              "Castellana"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/04/Barrio/6" ;
+        georesource:locales     "1025"^^xsd:int ;
+        georesource:numberdata  "174"^^xsd:int ;
+        georesource:poblacion   "16721"^^xsd:int .
+
+georesource:san-cristobal
+        a                       esadm:Barrio ;
+        rdfs:label              "San Cristóbal"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/17/Barrio/2" ;
+        georesource:locales     "352"^^xsd:int ;
+        georesource:numberdata  "42"^^xsd:int ;
+        georesource:poblacion   "16329"^^xsd:int .
+
+georesource:fontarron
+        a                       esadm:Barrio ;
+        rdfs:label              "Fontarrón"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/14/Barrio/5" ;
+        georesource:locales     "337"^^xsd:int ;
+        georesource:numberdata  "37"^^xsd:int ;
+        georesource:poblacion   "17703"^^xsd:int .
+
+georesource:abrantes  a         esadm:Barrio ;
+        rdfs:label              "Abrantes"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/7" ;
+        georesource:locales     "837"^^xsd:int ;
+        georesource:numberdata  "86"^^xsd:int ;
+        georesource:poblacion   "30270"^^xsd:int .
+
+georesource:simancas  a         esadm:Barrio ;
+        rdfs:label              "Simancas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/1" ;
+        georesource:locales     "1097"^^xsd:int ;
+        georesource:numberdata  "166"^^xsd:int ;
+        georesource:poblacion   "26366"^^xsd:int .
+
+georesource:castillejos
+        a                       esadm:Barrio ;
+        rdfs:label              "Castillejos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/06/Barrio/3" ;
+        georesource:locales     "1024"^^xsd:int ;
+        georesource:numberdata  "192"^^xsd:int ;
+        georesource:poblacion   "20302"^^xsd:int .
+
+georesource:media-legua
+        a                       esadm:Barrio ;
+        rdfs:label              "Media Legua"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/14/Barrio/4" ;
+        georesource:locales     "460"^^xsd:int ;
+        georesource:numberdata  "40"^^xsd:int ;
+        georesource:poblacion   "18998"^^xsd:int .
+
+georesource:horcajo  a          esadm:Barrio ;
+        rdfs:label              "Horcajo"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/14/Barrio/2" ;
+        georesource:locales     "69"^^xsd:int ;
+        georesource:numberdata  "5"^^xsd:int ;
+        georesource:poblacion   "6590"^^xsd:int .
+
+georesource:adelfas  a          esadm:Barrio ;
+        rdfs:label              "Adelfas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/03/Barrio/2" ;
+        georesource:locales     "422"^^xsd:int ;
+        georesource:numberdata  "39"^^xsd:int ;
+        georesource:poblacion   "17433"^^xsd:int .
+
+georesource:arcos  a            esadm:Barrio ;
+        rdfs:label              "Arcos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/4" ;
+        georesource:locales     "344"^^xsd:int ;
+        georesource:numberdata  "45"^^xsd:int ;
+        georesource:poblacion   "23860"^^xsd:int .
+
+georesource:cortes  a           esadm:Barrio ;
+        rdfs:label              "Cortes"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/01/Barrio/3" ;
+        georesource:locales     "1193"^^xsd:int ;
+        georesource:numberdata  "345"^^xsd:int ;
+        georesource:poblacion   "10937"^^xsd:int .
+
+georesource:las-acacias
+        a                       esadm:Barrio ;
+        rdfs:label              "Las Acacias"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/2" ;
+        georesource:locales     "1143"^^xsd:int ;
+        georesource:numberdata  "139"^^xsd:int ;
+        georesource:poblacion   "37406"^^xsd:int .
+
+georesource:puerta-del-angel
+        a                       esadm:Barrio ;
+        rdfs:label              "Puerta del Ángel"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/2" ;
+        georesource:locales     "2549"^^xsd:int ;
+        georesource:numberdata  "159"^^xsd:int ;
+        georesource:poblacion   "43724"^^xsd:int .
+
+georesource:casco-historico-de-vicalvaro
+        a                       esadm:Barrio ;
+        rdfs:label              "Casco Histórico de Vicálvaro"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/19/Barrio/1" ;
+        georesource:locales     "1200"^^xsd:int ;
+        georesource:numberdata  "110"^^xsd:int ;
+        georesource:poblacion   "50510"^^xsd:int .
+
+georesource:butarque  a         esadm:Barrio ;
+        rdfs:label              "Butarque"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/17/Barrio/3" ;
+        georesource:locales     "319"^^xsd:int ;
+        georesource:numberdata  "30"^^xsd:int ;
+        georesource:poblacion   "15739"^^xsd:int .
+
+georesource:concepcion
+        a                       esadm:Barrio ;
+        rdfs:label              "Concepción"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/4" ;
+        georesource:locales     "1269"^^xsd:int ;
+        georesource:numberdata  "119"^^xsd:int ;
+        georesource:poblacion   "21241"^^xsd:int .
+
+georesource:palos-de-moguer
+        a                       esadm:Barrio ;
+        rdfs:label              "Palos de Moguer"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/02/Barrio/6" ;
+        georesource:locales     "1291"^^xsd:int ;
+        georesource:numberdata  "180"^^xsd:int ;
+        georesource:poblacion   "27137"^^xsd:int .
+
+georesource:universidad
+        a                       esadm:Barrio ;
+        rdfs:label              "Universidad"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/01/Barrio/5" ;
+        georesource:locales     "2518"^^xsd:int ;
+        georesource:numberdata  "520"^^xsd:int ;
+        georesource:poblacion   "32695"^^xsd:int .
+
+georesource:la-paz  a           esadm:Barrio ;
+        rdfs:label              "La Paz"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/5" ;
+        georesource:locales     "631"^^xsd:int ;
+        georesource:numberdata  "78"^^xsd:int ;
+        georesource:poblacion   "35261"^^xsd:int .
+
+georesource:comillas  a         esadm:Barrio ;
+        rdfs:label              "Comillas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/1" ;
+        georesource:locales     "1213"^^xsd:int ;
+        georesource:numberdata  "95"^^xsd:int ;
+        georesource:poblacion   "23245"^^xsd:int .
+
+georesource:corralejos
+        a                       esadm:Barrio ;
+        rdfs:label              "Corralejos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/21/Barrio/5" ;
+        georesource:locales     "171"^^xsd:int ;
+        georesource:numberdata  "33"^^xsd:int ;
+        georesource:poblacion   "7079"^^xsd:int .
+
+georesource:opanel  a           esadm:Barrio ;
+        rdfs:label              "Opañel"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/2" ;
+        georesource:locales     "1658"^^xsd:int ;
+        georesource:numberdata  "135"^^xsd:int ;
+        georesource:poblacion   "32897"^^xsd:int .
+
+georesource:moscardo  a         esadm:Barrio ;
+        rdfs:label              "Moscardó"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/12/Barrio/5" ;
+        georesource:locales     "1200"^^xsd:int ;
+        georesource:numberdata  "118"^^xsd:int ;
+        georesource:poblacion   "26475"^^xsd:int .
+
+georesource:costillares
+        a                       esadm:Barrio ;
+        rdfs:label              "Costillares"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/9" ;
+        georesource:locales     "373"^^xsd:int ;
+        georesource:numberdata  "46"^^xsd:int ;
+        georesource:poblacion   "22852"^^xsd:int .
+
+georesource:valverde  a         esadm:Barrio ;
+        rdfs:label              "Valverde"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/6" ;
+        georesource:locales     "2157"^^xsd:int ;
+        georesource:numberdata  "191"^^xsd:int ;
+        georesource:poblacion   "55017"^^xsd:int .
+
+georesource:cuatro-vientos
+        a                       esadm:Barrio ;
+        rdfs:label              "Cuatro Vientos"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/6" ;
+        georesource:locales     "85"^^xsd:int ;
+        georesource:numberdata  "6"^^xsd:int ;
+        georesource:poblacion   "4133"^^xsd:int .
+
+georesource:pueblo-nuevo
+        a                       esadm:Barrio ;
+        rdfs:label              "Pueblo Nuevo"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/2" ;
+        georesource:locales     "3151"^^xsd:int ;
+        georesource:numberdata  "224"^^xsd:int ;
+        georesource:poblacion   "63212"^^xsd:int .
+
+georesource:canillejas
+        a                       esadm:Barrio ;
+        rdfs:label              "Canillejas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/7" ;
+        georesource:locales     "1321"^^xsd:int ;
+        georesource:numberdata  "112"^^xsd:int ;
+        georesource:poblacion   "29928"^^xsd:int .
+
+georesource:colina  a           esadm:Barrio ;
+        rdfs:label              "Colina"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/15/Barrio/7" ;
+        georesource:locales     "317"^^xsd:int ;
+        georesource:numberdata  "31"^^xsd:int ;
+        georesource:poblacion   "6250"^^xsd:int .
+
+georesource:bellas-vistas
+        a                       esadm:Barrio ;
+        rdfs:label              "Bellas Vistas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/06/Barrio/1" ;
+        georesource:locales     "1345"^^xsd:int ;
+        georesource:numberdata  "120"^^xsd:int ;
+        georesource:poblacion   "29264"^^xsd:int .
+
+georesource:marroquina
+        a                       esadm:Barrio ;
+        rdfs:label              "Marroquina"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/14/Barrio/3" ;
+        georesource:locales     "901"^^xsd:int ;
+        georesource:numberdata  "106"^^xsd:int ;
+        georesource:poblacion   "29227"^^xsd:int .
+
+georesource:apostol-santiago
+        a                       esadm:Barrio ;
+        rdfs:label              "Apóstol Santiago"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/16/Barrio/5" ;
+        georesource:locales     "320"^^xsd:int ;
+        georesource:numberdata  "30"^^xsd:int ;
+        georesource:poblacion   "15648"^^xsd:int .
+
+georesource:pena-grande
+        a                       esadm:Barrio ;
+        rdfs:label              "Peña Grande"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/08/Barrio/3" ;
+        georesource:locales     "905"^^xsd:int ;
+        georesource:numberdata  "99"^^xsd:int ;
+        georesource:poblacion   "45179"^^xsd:int .
+
+georesource:almenara  a         esadm:Barrio ;
+        rdfs:label              "Almenara"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/06/Barrio/4" ;
+        georesource:locales     "1220"^^xsd:int ;
+        georesource:numberdata  "90"^^xsd:int ;
+        georesource:poblacion   "22155"^^xsd:int .
+
+georesource:lista  a            esadm:Barrio ;
+        rdfs:label              "Lista"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/04/Barrio/5" ;
+        georesource:locales     "963"^^xsd:int ;
+        georesource:numberdata  "174"^^xsd:int ;
+        georesource:poblacion   "21064"^^xsd:int .
+
+georesource:rosas  a            esadm:Barrio ;
+        rdfs:label              "Rosas"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/20/Barrio/5" ;
+        georesource:locales     "858"^^xsd:int ;
+        georesource:numberdata  "90"^^xsd:int ;
+        georesource:poblacion   "31912"^^xsd:int .
+
+georesource:puerta-bonita
+        a                       esadm:Barrio ;
+        rdfs:label              "Puerta Bonita"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/11/Barrio/5" ;
+        georesource:locales     "1336"^^xsd:int ;
+        georesource:numberdata  "87"^^xsd:int ;
+        georesource:poblacion   "34500"^^xsd:int .
+
+georesource:ciudad-universitaria
+        a                       esadm:Barrio ;
+        rdfs:label              "Ciudad Universitaria"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/09/Barrio/3" ;
+        georesource:locales     "668"^^xsd:int ;
+        georesource:numberdata  "79"^^xsd:int ;
+        georesource:poblacion   "15531"^^xsd:int .
+
+georesource:aluche  a           esadm:Barrio ;
+        rdfs:label              "Aluche"@es ;
+        georesource:about       "http://datos.localidata.com/recurso/territorio/Provincia/Madrid/Municipio/madrid/Distrito/10/Barrio/4" ;
+        georesource:locales     "2250"^^xsd:int ;
+        georesource:numberdata  "239"^^xsd:int ;
+        georesource:poblacion   "70219"^^xsd:int .
+
