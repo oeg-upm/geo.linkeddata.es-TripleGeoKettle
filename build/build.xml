@@ -23,8 +23,9 @@
 	<!--<property name="kettle-swt-dir" location="${kettle-dir}/libswt/osx"/>-->
 	
 	<!-- Windows OS Configuration -->
-	<!-- <property name="kettle-dir" location=""/> -->
-	<!-- <property name="swt-jar" location="${kettle-dir}/"/> -->
+	<!-- <property name="kettle-dir" location="C:\Program Files (x86)\GeoKettle"/> -->
+	<!-- <property name="swt-jar" location="${kettle-dir}\libswt\win64"/> -->
+	<!-- <property name="swt-jar" location="${kettle-dir}\libswt\win32"/> -->
 	
 	<!-- Linux / Unix OS Configuration -->
 	<property name="kettle-dir" location="/opt/geokettle"/>
