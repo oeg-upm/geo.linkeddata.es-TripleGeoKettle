@@ -43,7 +43,7 @@ From now, you must launch geokettle from shell: ```./Applications/GeoKettle.app/
 
 ##Screenshot
 
-![TripleGEO](./distrib/Screenshot.png)
+![TripleGEO](./images/screenshot.png)
 
 ##License
 
