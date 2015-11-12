@@ -638,7 +638,6 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			int j = 0;
 			for (String c : this.input.getColumn_name()) {
 				columns[j].column_shp = c;
-				System.out.println(columns[j].column_shp);
 				if (columns[j].column.equalsIgnoreCase("empty")){
 					columns[j].column = c;
 				}
@@ -709,12 +708,14 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	 */
 	private void loadColumnName() {		
 		try {			
-			ArrayList<String> column_name = new ArrayList<String>();			
-			RowMetaInterface rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));				
-			for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
-				column_name.add(vmeta.getName());
+			ArrayList<String> column_name = new ArrayList<String>();	
+			if (this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText())) != null){
+				RowMetaInterface rm = this.trans.getPrevStepFields(this.trans.findStep(this.wStepname.getText()));				
+				for (ValueMetaInterface vmeta : rm.getValueMetaList()) {
+					column_name.add(vmeta.getName());
+				}
 			}
-			this.input.setColumn_name(column_name);		
+			this.input.setColumn_name(column_name);
 		} catch (KettleStepException e) {
 			e.printStackTrace();
 		}
