@@ -1,3 +1,21 @@
+/*
+ * ShpToRDF.java	version 1.0   13/11/2015
+ *
+ * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
+ *
+ * This library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package plugin;
 
 import org.apache.jena.ontology.OntModelSpec;
@@ -20,7 +38,16 @@ import org.pentaho.di.core.row.ValueMetaInterface;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Tranforms a shapefile file to a RDF format.
+ * Class to convert shapefiles to RDF.
+ *
+ * @author jonbaraq
+ * initially implemented for geometry2rdf utility (source: https://github.com/boricles/geometry2rdf/tree/master/Geometry2RDF)
+ * Modified by: Kostas Patroumpas, 8/2/2013
+ * Modified: 6/3/2013, added support for transformation from a given CRS to WGS84
+ * Modified: 15/3/2013, added support for exporting custom geometries to (1) Virtuoso RDF and (2) according to WGS84 Geopositioning RDF vocabulary  
+ * Modified: 12/6/2013, Kostas Patroumpas
+ * Rename ShpConnector.java to ShpToRDF.java
+ * Last modified by: Rosangelis Garcia, 13/11/2015
  */
 public class ShpToRDF {
 

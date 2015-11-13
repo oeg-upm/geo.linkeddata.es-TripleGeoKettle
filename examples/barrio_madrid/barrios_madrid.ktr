@@ -53,19 +53,51 @@
   </info>
   <notepads>
     <notepad>
-      <note>This transformation allows the generation of a RDF under the GeoSPARQL 
+      <note>#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Copyright (C) 2015 Ontology Engineering Group.
+  author = Rosangelis Garcia
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+
+This transformation allows the generation of a RDF under the GeoSPARQL 
 standard. First the shapefile is read. Then the geometry field (always 
 the_geom when reading a shapefile) is transformed to the WGS 84 spatial 
 reference system. After this process, the RDF is generated in the tripleGEO
 step and finally exported to a file whose extension is ttl.</note>
-      <xloc>50</xloc>
-      <yloc>45</yloc>
-      <width>416</width>
-      <heigth>75</heigth>
+      <xloc>46</xloc>
+      <yloc>53</yloc>
+      <width>509</width>
+      <heigth>140</heigth>
     </notepad>
   </notepads>
   <order>
   <hop> <from>Shapefile File Input</from><to>Transformation to WGS 84</to><enabled>Y</enabled> </hop>  <hop> <from>Transformation to WGS 84</from><to>tripleGEO</to><enabled>Y</enabled> </hop>  <hop> <from>tripleGEO</from><to>Text file output</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Shapefile File Input</name>
+    <type>GISFileInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <filename/>
+    <isfilenameinfield>N</isfilenameinfield>
+    <filenamefield/>
+    <limit>0</limit>
+    <add_rownr>N</add_rownr>
+    <field_rownr/>
+    <gis_file_charset>UTF-8</gis_file_charset>
+    <passing_through_fields>N</passing_through_fields>
+    <accept_stepname/>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>103</xloc>
+      <yloc>268</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Text file output</name>
     <type>TextFileOutput</type>
@@ -154,33 +186,6 @@ step and finally exported to a file whose extension is ttl.</note>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>241</xloc>
-      <yloc>268</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Shapefile File Input</name>
-    <type>GISFileInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <filename/>
-    <isfilenameinfield>N</isfilenameinfield>
-    <filenamefield/>
-    <limit>0</limit>
-    <add_rownr>N</add_rownr>
-    <field_rownr/>
-    <gis_file_charset>UTF-8</gis_file_charset>
-    <passing_through_fields>N</passing_through_fields>
-    <accept_stepname/>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>103</xloc>
       <yloc>268</yloc>
       <draw>Y</draw>
       </GUI>
