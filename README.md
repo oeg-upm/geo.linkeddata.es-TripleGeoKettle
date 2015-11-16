@@ -1,10 +1,6 @@
 #geo.linkeddata.es-TripleGeoKettle
 
-Repository where the integration of TripleGeo and GeoKettle is performed, used in the [geo.linkeddata.es](https://github.com/oeg-upm/geo.linkeddata.es-termite) project.
-
-##Documentation
-
-The project documentation geo.linked data.es-Triple GeoKettle is on the [wiki](https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/wiki).
+Repository where the integration of TripleGeo and GeoKettle is performed, used in the [geo.linkeddata.es](https://github.com/oeg-upm/geo.linkeddata.es-termite) project. The project documentation geo.linkeddata.es-TripleGeoKettle is on the [wiki](https://github.com/oeg-upm/geo.linkeddata.es-TripleGeoKettle/wiki).
 
 ##Screenshot
 
