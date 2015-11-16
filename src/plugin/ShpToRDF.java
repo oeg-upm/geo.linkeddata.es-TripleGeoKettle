@@ -1,5 +1,5 @@
 /*
- * ShpToRDF.java	version 1.0   13/11/2015
+ * ShpToRDF.java	version 1.0   16/11/2015
  *
  * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
  *
@@ -47,7 +47,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * Modified: 15/3/2013, added support for exporting custom geometries to (1) Virtuoso RDF and (2) according to WGS84 Geopositioning RDF vocabulary  
  * Modified: 12/6/2013, Kostas Patroumpas
  * Rename ShpConnector.java to ShpToRDF.java
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 16/11/2015
  */
 public class ShpToRDF {
 
@@ -207,23 +207,40 @@ public class ShpToRDF {
 				}
 				pos_csv++;
 			}
-
-			// Check if the attribute in the CSV file exist
+			
+			// Check if the attribute in the CSV file exist			
+			boolean flag_classe = true;
 			if (fl){			
-				for (int j = 0; j< classes.length; j++){
-					if (classes[j].getColumn().equalsIgnoreCase(row_csv.toString())){						
-						String feature_csv = repeatedCharacters(removeSpecialCharacter(classes[j].getValue()));						
+				for (ClassesCSV classe : classes) {
+					if (classe.getColumn().equalsIgnoreCase(row_csv.toString())){						
+						String feature_csv = repeatedCharacters(removeSpecialCharacter(classe.getValue()));						
 						String feature = repeatedCharacters(URLEncoder.encode(feature_csv.toLowerCase(), Constants.UTF_8)
 								.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
 						insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
+						flag_classe = false;
 						break;
 					}
 				}
+				
+				// If do not exist this class in the CSV file
+				if (flag_classe) {
+					String feature_ = repeatedCharacters(removeSpecialCharacter(this.feature));						
+					String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
+							.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+					insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );					
+				}
+				
 			} else {
-				insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + this.feature);
-			}			
+				String feature_ = repeatedCharacters(removeSpecialCharacter(this.feature));						
+				String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
+						.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+				insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
+			} 			
 		} else {
-			insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + this.feature);
+			String feature_ = repeatedCharacters(removeSpecialCharacter(this.feature));						
+			String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
+					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+			insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
 		}	
 
 		// Label with special characters

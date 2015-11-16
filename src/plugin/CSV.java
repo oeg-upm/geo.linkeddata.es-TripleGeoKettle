@@ -1,5 +1,5 @@
 /*
- * CSV.java   version 1.0   13/11/2015
+ * CSV.java   version 1.0   16/11/2015
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -25,7 +25,7 @@ import java.io.IOException;
  * CSV file to generate classes.
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 16/11/2015
  */
 public class CSV {
 
@@ -87,11 +87,17 @@ public class CSV {
 				if (flag){
 					flag = false;
 					setAttribute(lineSplit[0]);
-				} else {					
-					classes[i] = new ClassesCSV();
-					classes[i].setAttribute(this.attribute);
-					classes[i].setColumn(lineSplit[0]);
-					classes[i].setValue(lineSplit[1]);
+				} else {
+
+						classes[i] = new ClassesCSV();
+						classes[i].setAttribute(this.attribute);
+					if (lineSplit.length != 0){
+						classes[i].setColumn(lineSplit[0]);
+						classes[i].setValue(lineSplit[1]);
+					} else {
+						classes[i].setColumn("null");
+						classes[i].setValue("null");
+					}
 					i++;
 				}				
 			}			
