@@ -1,5 +1,5 @@
 /*
- * tripleGEOStepMeta.java	version 1.0   13/11/2015
+ * tripleGEOStepMeta.java	version 1.0   16/11/2015
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -52,7 +52,7 @@ import org.w3c.dom.Node;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepMetaInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 16/11/2015
  */
 public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface {
 
@@ -235,7 +235,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 			this.resourceNS = "http://geo.linkeddata.es/resource/";    
 			this.resourceNSPrefix = "georesource";
 			this.language = "es";
-			this.pathCSV = "null";
+			this.pathCSV = Constants.null_;
 			this.uuidsActive = false;
 		}
 	}

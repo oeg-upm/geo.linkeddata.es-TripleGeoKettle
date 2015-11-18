@@ -1,5 +1,5 @@
 /*
- * tripleGEOStepDialog.java	version 1.0   13/11/2015
+ * tripleGEOStepDialog.java	version 1.0   18/11/2015
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -15,6 +15,7 @@
  */
 package plugin;
 
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -31,6 +32,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -59,7 +61,7 @@ import java.util.ArrayList;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepDialogInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 18/11/2015
  */
 public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInterface {
 
@@ -106,6 +108,7 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 	private Text wPathCSV;
 	private FormData fdlPathCSV;
 	private FormData fdPathCSV;	
+	private Button wbbPathCSV;
 	
 	private Label wluuids;
 	private Button wuuids;
@@ -349,6 +352,15 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wLanguage.setLayoutData(this.fdLanguage);
 		
 		// PATH CSV PathCSV
+		this.wbbPathCSV = new Button(cData,131072);
+		props.setLook(this.wbbPathCSV);
+		this.wbbPathCSV.setText(BaseMessages.getString(PKG,"tripleGEOStepDialog.PathCSVButton.Label"));
+		this.wbbPathCSV.setToolTipText(BaseMessages.getString(PKG,"tripleGEOStepDialog.PathCSVButtonTooltip.Label"));
+		FormData fdbFilename = new FormData();
+		fdbFilename.top = new FormAttachment(this.wLanguage, margin);
+		fdbFilename.right = new FormAttachment(100, 0);
+		this.wbbPathCSV.setLayoutData(fdbFilename);
+		
 		this.wlPathCSV = new Label(cData, 131072);
 		this.wlPathCSV.setText(BaseMessages.getString(PKG,"tripleGEOStepDialog.PathCSV.Label"));
 		this.props.setLook(this.wlPathCSV);
@@ -363,10 +375,10 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.wPathCSV.addModifyListener(lsMod);
 		this.fdPathCSV = new FormData();
 		this.fdPathCSV.left = new FormAttachment(middle, 0);
-		this.fdPathCSV.right = new FormAttachment(100, -margin);
+		this.fdPathCSV.right = new FormAttachment(this.wbbPathCSV, -margin);
 		this.fdPathCSV.top = new FormAttachment(this.wLanguage, margin);
 		this.wPathCSV.setLayoutData(this.fdPathCSV);	
-
+			
 		// UUIDS
 		this.wluuids = new Label(cData, 131072);
 		this.wluuids.setText(BaseMessages.getString(PKG,"tripleGEOStepDialog.uuids.Label"));
@@ -475,7 +487,27 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.shell.addShellListener(new ShellAdapter(){
 			public void shellClosed(ShellEvent e){ tripleGEOStepDialog.this.cancel(); }
 		});
+		
+		// Listen to the browse button next to the file name
+		this.wbbPathCSV.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog dialog = new FileDialog(shell, SWT.OPEN);
+				dialog.setFilterExtensions(new String[] { "*.csv;*.CSV", "*" });
+				if (tripleGEOStepDialog.this.wPathCSV.getText() != null) {
+					dialog.setFileName(tripleGEOStepDialog.this.wPathCSV.getText());
+			        }
+	
+				dialog.setFilterNames(new String[] {"CSV files", "All files" });
 
+				if (dialog.open() != null) {
+					String str = dialog.getFilterPath()
+							+ System.getProperty("file.separator")
+							+ dialog.getFileName();
+					tripleGEOStepDialog.this.wPathCSV.setText(str);				
+				}	
+			}
+		});
+		
 		// Set the shell size, based upon previous time
 		setSize(this.shell, 600, 600, true);
 
@@ -589,13 +621,18 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		if (!isEmpty(this.wLanguage.getText())) {
 			this.input.setLanguage(this.wLanguage.getText());
 		} else {
-			this.input.setLanguage("null");
+			this.input.setLanguage(Constants.null_);
 		}
 		
-		if (!isEmpty(this.wPathCSV.getText())) {			
-			this.input.setPathCSV(this.wPathCSV.getText());
+		if (!isEmpty(this.wPathCSV.getText())) {	
+			String ext = FilenameUtils.getExtension(this.wPathCSV.getText());
+			if (ext.equalsIgnoreCase("csv")){
+				this.input.setPathCSV(this.wPathCSV.getText());
+			} else {
+				this.input.setPathCSV(this.input.getPathCSV());
+			}
 		} else {
-			this.input.setPathCSV("null");
+			this.input.setPathCSV(Constants.null_);
 		}
 		
 		int nrNonEmptyFields = this.wFields.nrNonEmpty();

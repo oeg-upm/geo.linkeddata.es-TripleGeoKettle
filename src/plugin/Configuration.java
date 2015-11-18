@@ -1,5 +1,5 @@
 /*
- * Configuration.java 	 version 1.0   13/11/2015
+ * Configuration.java 	 version 1.0   16/11/2015
  *
  * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
  *
@@ -28,7 +28,7 @@ import java.util.Properties;
  * @author jonathangsc
  * initially implemented for geometry2rdf utility (source: https://github.com/boricles/geometry2rdf/tree/master/Geometry2RDF)
  * Modified: 5/6/2013, Kostas Patroumpas
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 16/11/2015
  */
 public class Configuration {
 
@@ -125,7 +125,7 @@ public class Configuration {
 		if (!isNullOrEmpty(properties.getProperty("pathCSV"))) {
 			this.pathCSV = properties.getProperty("pathCSV");
 		} else {
-			this.pathCSV = "null";
+			this.pathCSV = Constants.null_;
 		}
 		if (!isNullOrEmpty(properties.getProperty("uuids"))) {
 			this.uuids = properties.getProperty("uuids");			

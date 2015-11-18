@@ -1,5 +1,5 @@
 /*
- * Constants.java	version 1.0   13/11/2015
+ * Constants.java	version 1.0   16/11/2015
  *
  * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
  *
@@ -24,7 +24,7 @@ package plugin;
  * @author 2012 jonbaraq
  * initially implemented for geometry2rdf utility (source: https://github.com/boricles/geometry2rdf/tree/master/Geometry2RDF) 
  * Modified: 24/5/2013, Kostas Patroumpas
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 16/11/2015
  */
 public class Constants {
 	
@@ -48,6 +48,7 @@ public class Constants {
 	public static final String outputField = "rdf_output";
 	public static final String format = "TURTLE";
 	public static final String the_geom = "the_geom";
+	public static final String null_ = "null";	
 	
 	// URL Constants		
 	public static final String NS_GEO = "http://www.opengis.net/ont/geosparql#";

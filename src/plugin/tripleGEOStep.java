@@ -1,5 +1,5 @@
 /*
- * tripleGEOStep.java	version 1.0   13/11/2015
+ * tripleGEOStep.java	version 1.0   16/11/2015
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -33,7 +33,7 @@ import org.pentaho.di.trans.step.StepMetaInterface;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 13/11/2015
+ * Last modified by: Rosangelis Garcia, 16/11/2015
  */
 public class tripleGEOStep extends BaseStep implements StepInterface {
 
@@ -95,7 +95,7 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 			Boolean flag_csv = false;
 			ClassesCSV[] classes = null;
 			CSV csv = null;
-			if (!this.meta.getPathCSV().equalsIgnoreCase("null")){
+			if (!this.meta.getPathCSV().equalsIgnoreCase(Constants.null_)){
 				csv = new CSV(this.meta.getPathCSV());				
 				if (csv.exist()){					
 					classes = csv.read();

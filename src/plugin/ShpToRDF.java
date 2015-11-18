@@ -336,7 +336,7 @@ public class ShpToRDF {
 		} else if (object.toString().equals("")) {
 			resource.addProperty(property, object.toString());
 		} else {
-			if (this.language.equalsIgnoreCase("null")){
+			if (this.language.equalsIgnoreCase(Constants.null_)){
 				literal = this.model_rdf.createLiteral(object.toString(), "");
 				resource.addLiteral(property, literal);
 			} else {
@@ -477,7 +477,7 @@ public class ShpToRDF {
 		} else if (label.toString().equals("")) {
 			this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, ""));
 		} else { 
-			if (this.language.equalsIgnoreCase("null")){
+			if (this.language.equalsIgnoreCase(Constants.null_)){
 				this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, ""));
 			} else {
 				this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, lang));

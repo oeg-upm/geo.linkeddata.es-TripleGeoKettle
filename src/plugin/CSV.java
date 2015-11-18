@@ -95,8 +95,8 @@ public class CSV {
 						classes[i].setColumn(lineSplit[0]);
 						classes[i].setValue(lineSplit[1]);
 					} else {
-						classes[i].setColumn("null");
-						classes[i].setValue("null");
+						classes[i].setColumn(Constants.null_);
+						classes[i].setValue(Constants.null_);
 					}
 					i++;
 				}				
