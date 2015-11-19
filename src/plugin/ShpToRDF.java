@@ -1,5 +1,5 @@
 /*
- * ShpToRDF.java	version 1.0   16/11/2015
+ * ShpToRDF.java	version 1.0   19/11/2015
  *
  * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
  *
@@ -47,7 +47,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * Modified: 15/3/2013, added support for exporting custom geometries to (1) Virtuoso RDF and (2) according to WGS84 Geopositioning RDF vocabulary  
  * Modified: 12/6/2013, Kostas Patroumpas
  * Rename ShpConnector.java to ShpToRDF.java
- * Last modified by: Rosangelis Garcia, 16/11/2015
+ * Last modified by: Rosangelis Garcia, 19/11/2015
  */
 public class ShpToRDF {
 
@@ -186,10 +186,17 @@ public class ShpToRDF {
 			}
 		} else {
 			encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
-					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));			
-			if (featureAttribute.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
-				encodingResource = "_" + encodingResource;
-			}
+					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));		
+		
+			if (featureAttribute.length() > 1){
+				if (featureAttribute.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
+					encodingResource = "_" + encodingResource;
+				}
+			} else if (featureAttribute.length() == 1){
+				if (featureAttribute.matches("-?\\d+(\\.\\d+)?")){
+					encodingResource = "_" + encodingResource;
+				}
+			}			
 		}
 		
 		// Type according to GeoSPARQL feature		
@@ -252,18 +259,19 @@ public class ShpToRDF {
 			for (ValueMetaInterface vmeta : outputRowMeta.getValueMetaList()) {   			
 				if (!vmeta.getName().equalsIgnoreCase(Constants.the_geom) 
 						&& !vmeta.getName().equalsIgnoreCase(this.attributeName) 
-						&& row[pos] != null){
+						&& row[pos] != null){					
 					if (!row[pos].toString().matches("") && !row[pos].toString().matches("0"))
 						addColumns(encodingResource,vmeta.getName(),row[pos],this.resourceNS);    		
 				}		
 				pos++;
 			}
-		} else {			
+		} else {
 			for (ColumnDefinition col : this.columns) {
 				if (col.getShow().equalsIgnoreCase("YES")
 						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName) 
 						&& !col.getColumn().equalsIgnoreCase(Constants.the_geom)
 						&& row[pos] != null){
+					
 					if (col.getUri() != null && col.getPrefix() != null){						
 						if (!row[pos].toString().matches("") && !row[pos].toString().matches("0"))
 							addColumns(encodingResource,col.getColumn(),row[pos],col.getUri());						
@@ -318,15 +326,15 @@ public class ShpToRDF {
 		Property property = this.model_rdf.createProperty(propertyNS + column.toLowerCase());		        		
 		Literal literal;
 		
-		if (object.toString().matches(".*\\d.*")) { // Object is a number				
+		if (object.toString().matches(".*\\d.*")) { // Object is a number
 			if (object.toString().matches("-?\\d+(\\.\\d+)?")){
-				float number = Float.parseFloat(object.toString());			
+				float number = Float.parseFloat(object.toString());
 				int n = (int)number;
 				float partInt = number - n;
 				if (partInt == 0.0){				
 					literal = this.model_rdf.createTypedLiteral(n);
 				} else {
-					literal = this.model_rdf.createTypedLiteral(object);
+					literal = this.model_rdf.createTypedLiteral(number);
 				}
 				resource.addLiteral(property, literal);
 			} else {
