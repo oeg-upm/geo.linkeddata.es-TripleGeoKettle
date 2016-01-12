@@ -121,8 +121,10 @@ public class ShpToRDF {
 		// RDFS_MEM - A specification for RDFS ontology models that are	stored in 
 		//			  memory and do no additional entailment reasoning
 		modelAux.removeAll();			
-		modelAux.setNsPrefix(this.ontologyNSPrefix, this.ontologyNS);
-		modelAux.setNsPrefix(this.resourceNSPrefix, this.resourceNS);
+		modelAux.setNsPrefix(this.ontologyNSPrefix, 
+				this.ontologyNS.replace(Constants.space,Constants.empty));
+		modelAux.setNsPrefix(this.resourceNSPrefix, 
+				this.resourceNS.replace(Constants.space,Constants.empty));
 		modelAux.setNsPrefix("geosparql", Constants.NS_GEO);
 		modelAux.setNsPrefix("sf", Constants.NS_SF);
 		modelAux.setNsPrefix("dc", Constants.NS_DC);
@@ -138,9 +140,15 @@ public class ShpToRDF {
 			for (ColumnDefinition col : this.columns) {
 				if (col.getShow().equalsIgnoreCase("YES") 
 						&& col.getUri() != null 
-						&& col.getPrefix() != null 
-						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName)){					
-					checkPrefixUri(modelAux,col.getPrefix(),col.getUri());
+						&& col.getPrefix() != null 					
+						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName)){	
+					checkPrefixUri(modelAux,col.getPrefix(),
+							col.getUri().replace(Constants.space,Constants.empty));
+				}
+				if (col.getColumn_shp().equalsIgnoreCase(this.attributeName) 
+						&& col.getPrefix() != null && col.getUri() != null){
+					checkPrefixUri(modelAux,col.getPrefix(),
+							col.getUri().replace(Constants.space,Constants.empty));
 				}
 			}
 		}
@@ -149,7 +157,8 @@ public class ShpToRDF {
 		if (this.fields != null) {
 			for (FieldDefinition field : this.fields) {
 				if (field.getPrefix() != null && field.getUri() != null){					
-					checkPrefixUri(modelAux,field.getPrefix(),field.getUri());			
+					checkPrefixUri(modelAux,field.getPrefix(),
+							field.getUri().replace(Constants.space,Constants.empty));			
 				}
 			}
 		}		
@@ -185,9 +194,12 @@ public class ShpToRDF {
 				encodingResource = "_" + encodingResource;
 			}
 		} else {
-			encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
-					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));		
-		
+			//encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
+			//		.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));		
+
+			encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute, Constants.UTF_8)
+					.replace(Constants.STRING_TO_REPLACE,Constants.empty));	
+
 			if (featureAttribute.length() > 1){
 				if (featureAttribute.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
 					encodingResource = "_" + encodingResource;
@@ -198,11 +210,11 @@ public class ShpToRDF {
 				}
 			}			
 		}
-		
+
 		// Type according to GeoSPARQL feature		
 		Object row_csv = null;
 		Boolean fl = false;
-		
+
 		// Check if the CSV file exist
 		if (getFlag_csv()){ 
 			int pos_csv = 0;
@@ -214,44 +226,60 @@ public class ShpToRDF {
 				}
 				pos_csv++;
 			}
-			
+
 			// Check if the attribute in the CSV file exist			
 			boolean flag_classe = true;
 			if (fl){			
 				for (ClassesCSV classe : classes) {
 					if (classe.getColumn().equalsIgnoreCase(row_csv.toString())){						
 						String feature_csv = repeatedCharacters(removeSpecialCharacter(classe.getValue()));						
-						String feature = repeatedCharacters(URLEncoder.encode(feature_csv.toLowerCase(), Constants.UTF_8)
-								.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
-						insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
+						//String feature = repeatedCharacters(URLEncoder.encode(feature_csv.toLowerCase(), Constants.UTF_8)
+						//		.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));
+						String feature = repeatedCharacters(URLEncoder.encode(feature_csv, Constants.UTF_8)
+								.replace(Constants.STRING_TO_REPLACE,Constants.empty));
+
+						insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty) 
+								+ encodingResource,
+								this.ontologyNS.replace(Constants.space,Constants.empty) + feature );
 						flag_classe = false;
 						break;
 					}
 				}
-				
+
 				// If do not exist this class in the CSV file
 				if (flag_classe) {
 					String feature_ = repeatedCharacters(removeSpecialCharacter(this.feature));						
-					String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
-							.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
-					insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );					
+					//String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
+					//		.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+					String feature = repeatedCharacters(URLEncoder.encode(feature_, Constants.UTF_8)
+							.replace(Constants.STRING_TO_REPLACE,Constants.empty));	
+					insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty)
+							+ encodingResource,
+							this.ontologyNS.replace(Constants.space,Constants.empty) + feature );					
 				}
-				
+
 			} else {
 				String feature_ = repeatedCharacters(removeSpecialCharacter(this.feature));						
-				String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
-						.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
-				insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
+				//String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
+				//		.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+				String feature = repeatedCharacters(URLEncoder.encode(feature_, Constants.UTF_8)
+						.replace(Constants.STRING_TO_REPLACE,Constants.empty));	
+				insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty)
+						+ encodingResource,this.ontologyNS.replace(Constants.space,Constants.empty) + feature );
 			} 			
 		} else {
 			String feature_ = repeatedCharacters(removeSpecialCharacter(this.feature));						
-			String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
-					.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
-			insertResourceTypeResource(this.resourceNS + encodingResource,this.ontologyNS + feature );
+			//String feature = repeatedCharacters(URLEncoder.encode(feature_.toLowerCase(), Constants.UTF_8)
+			//		.replace(Constants.STRING_TO_REPLACE,Constants.SEPARATOR));	
+			String feature = repeatedCharacters(URLEncoder.encode(feature_, Constants.UTF_8)
+					.replace(Constants.STRING_TO_REPLACE,Constants.empty));	
+			insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty)
+					+ encodingResource,this.ontologyNS.replace(Constants.space,Constants.empty) + feature );
 		}	
 
 		// Label with special characters
-		insertLabelResource(this.resourceNS + encodingResource, label, this.language);
+		insertLabelResource(this.resourceNS.replace(Constants.space,Constants.empty)
+				+ encodingResource, label, this.language);
 
 		// Columns of the shapefile
 		int pos = 0;
@@ -260,25 +288,35 @@ public class ShpToRDF {
 				if (!vmeta.getName().equalsIgnoreCase(Constants.the_geom) 
 						&& !vmeta.getName().equalsIgnoreCase(this.attributeName) 
 						&& row[pos] != null){					
-					if (!row[pos].toString().matches("") && !row[pos].toString().matches("0"))
-						addColumns(encodingResource,vmeta.getName(),row[pos],this.resourceNS);    		
+					if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
+						addColumns(encodingResource,vmeta.getName(),row[pos],
+								this.resourceNS.replace(Constants.space,Constants.empty));    		
 				}		
 				pos++;
 			}
 		} else {
 			for (ColumnDefinition col : this.columns) {
+				if (col.getColumn_shp().equalsIgnoreCase(this.attributeName)){
+					if (col.getPrefix() != null && col.getUri() != null){
+						if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
+							addColumns(encodingResource,col.getColumn(),row[pos],
+									col.getUri().replace(Constants.space,Constants.empty));	
+					}
+				}
+				
 				if (col.getShow().equalsIgnoreCase("YES")
-						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName) 
+						&& !col.getColumn_shp().equalsIgnoreCase(this.attributeName)
 						&& !col.getColumn().equalsIgnoreCase(Constants.the_geom)
-						&& row[pos] != null){
-					
+						&& row[pos] != null){					
 					if (col.getUri() != null && col.getPrefix() != null){						
-						if (!row[pos].toString().matches("") && !row[pos].toString().matches("0"))
-							addColumns(encodingResource,col.getColumn(),row[pos],col.getUri());						
+						if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
+							addColumns(encodingResource,col.getColumn(),row[pos],
+									col.getUri().replace(Constants.space,Constants.empty));						
 					} else {
-						if (!row[pos].toString().matches("") && !row[pos].toString().matches("0"))
-							addColumns(encodingResource,col.getColumn(),row[pos],this.resourceNS);						
-					}	
+						if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
+							addColumns(encodingResource,col.getColumn(),row[pos],
+									this.resourceNS.replace(Constants.space,Constants.empty));						
+					}					
 				}
 				pos++;
 			}
@@ -322,10 +360,11 @@ public class ShpToRDF {
 	 * @param propertyNS - Property
 	 */	
 	private void addColumns(String encodingResource, String column, Object object, String propertyNS){
-		Resource resource = this.model_rdf.createResource(this.resourceNS + encodingResource);
-		Property property = this.model_rdf.createProperty(propertyNS + column.toLowerCase());		        		
+		Resource resource = this.model_rdf.createResource(this.resourceNS.replace(Constants.space,Constants.empty) + encodingResource);
+		//Property property = this.model_rdf.createProperty(propertyNS + column.toLowerCase());	
+		Property property = this.model_rdf.createProperty(propertyNS + column);
 		Literal literal;
-		
+
 		if (object.toString().matches(".*\\d.*")) { // Object is a number
 			if (object.toString().matches("-?\\d+(\\.\\d+)?")){
 				float number = Float.parseFloat(object.toString());
@@ -338,14 +377,14 @@ public class ShpToRDF {
 				}
 				resource.addLiteral(property, literal);
 			} else {
-				literal = this.model_rdf.createLiteral(object.toString(), "");
+				literal = this.model_rdf.createLiteral(object.toString(), Constants.empty);
 				resource.addLiteral(property, literal);
 			}						
-		} else if (object.toString().equals("")) {
+		} else if (object.toString().equals(Constants.empty)) {
 			resource.addProperty(property, object.toString());
 		} else {
 			if (this.language.equalsIgnoreCase(Constants.null_)){
-				literal = this.model_rdf.createLiteral(object.toString(), "");
+				literal = this.model_rdf.createLiteral(object.toString(),Constants.empty);
 				resource.addLiteral(property, literal);
 			} else {
 				literal = this.model_rdf.createLiteral(object.toString(), this.language);
@@ -360,9 +399,13 @@ public class ShpToRDF {
 	 * @param geometry - The geometry
 	 */	
 	private void addGeometry(String encodingResource, Geometry geometry){
-		Resource resourceGeometry = this.model_rdf.createResource(this.resourceNS + encodingResource);
+		Resource resourceGeometry = this.model_rdf.createResource(
+				this.resourceNS.replace(Constants.space,Constants.empty) + encodingResource
+				);
 		Property property = this.model_rdf.createProperty(Constants.NS_GEO + "hasGeometry");
-		Resource resourceGeometry2 = this.model_rdf.createResource(this.resourceNS + encodingResource + Constants.GEOMETRY);
+		Resource resourceGeometry2 = this.model_rdf.createResource(
+				this.resourceNS.replace(Constants.space,Constants.empty) + encodingResource + Constants.GEOMETRY
+				);
 		resourceGeometry.addProperty(property, resourceGeometry2);									
 
 		String geo = encodingResource + Constants.GEOMETRY;
@@ -407,8 +450,10 @@ public class ShpToRDF {
 	 * @param geo - Geometry
 	 */
 	private void insertLineString(String resource, Geometry geo) {          
-		insertResourceTypeResource(this.resourceNS + resource, Constants.NS_SF + Constants.LINE_STRING);	
-		insertLiteralTriplet(this.resourceNS + resource, Constants.NS_GEO + Constants.WKT, geo.toText(), 
+		insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty) + resource, 
+				Constants.NS_SF + Constants.LINE_STRING);	
+		insertLiteralTriplet(this.resourceNS.replace(Constants.space,Constants.empty) + resource, 
+				Constants.NS_GEO + Constants.WKT, geo.toText(), 
 				Constants.NS_GEO + Constants.WKTLiteral);
 	}
 
@@ -418,8 +463,10 @@ public class ShpToRDF {
 	 * @param geo - Geometry
 	 */
 	private void insertPolygon(String resource, Geometry geo) {		
-		insertResourceTypeResource(this.resourceNS + resource, Constants.NS_SF + Constants.POLYGON);		    
-		insertLiteralTriplet(this.resourceNS + resource,Constants.NS_GEO + Constants.WKT, geo.toText(),
+		insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty) + resource, 
+				Constants.NS_SF + Constants.POLYGON);		    
+		insertLiteralTriplet(this.resourceNS.replace(Constants.space,Constants.empty) + resource,
+				Constants.NS_GEO + Constants.WKT, geo.toText(),
 				Constants.NS_GEO +  Constants.WKTLiteral);
 	}
 
@@ -429,22 +476,26 @@ public class ShpToRDF {
 	 * @param geo - Geometry
 	 */
 	private void insertMultiPolygon(String resource, Geometry geo) {	
-		insertResourceTypeResource(this.resourceNS + resource, Constants.NS_SF + Constants.MULTI_POLYGON);		    
-		insertLiteralTriplet(this.resourceNS + resource,Constants.NS_GEO + Constants.WKT, geo.toText(),
+		insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty) + resource, 
+				Constants.NS_SF + Constants.MULTI_POLYGON);		    
+		insertLiteralTriplet(this.resourceNS.replace(Constants.space,Constants.empty) + resource,
+				Constants.NS_GEO + Constants.WKT, geo.toText(),
 				Constants.NS_GEO +  Constants.WKTLiteral);
 	}
-	
+
 	/**
 	 * Handle MultiPolyline geometry according to GeoSPARQL standard
 	 * @param resource - Attribute
 	 * @param geo - Geometry
 	 */
 	private void insertMultiLineString(String resource, Geometry geo) {          
-		insertResourceTypeResource(this.resourceNS + resource, Constants.NS_SF + Constants.MULTI_LINE_STRING);	
-		insertLiteralTriplet(this.resourceNS + resource, Constants.NS_GEO + Constants.WKT, geo.toText(), 
+		insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty) + resource, 
+				Constants.NS_SF + Constants.MULTI_LINE_STRING);	
+		insertLiteralTriplet(this.resourceNS.replace(Constants.space,Constants.empty) + resource, 
+				Constants.NS_GEO + Constants.WKT, geo.toText(), 
 				Constants.NS_GEO + Constants.WKTLiteral);
 	}
-	
+
 	/**
 	 * Handle resource type
 	 * @param r1 - Attribute 1
@@ -481,12 +532,12 @@ public class ShpToRDF {
 	private void insertLabelResource(String resource, String label, String lang) {				
 		Resource resource1 = this.model_rdf.createResource(resource);	
 		if (label.toString().matches(".*\\d.*")){ // label is a number
-			this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, ""));									
-		} else if (label.toString().equals("")) {
-			this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, ""));
+			this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label,Constants.empty));									
+		} else if (label.toString().equals(Constants.empty)) {
+			this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label,Constants.empty));
 		} else { 
 			if (this.language.equalsIgnoreCase(Constants.null_)){
-				this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, ""));
+				this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, Constants.empty));
 			} else {
 				this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label, lang));
 			}
@@ -499,8 +550,10 @@ public class ShpToRDF {
 	 * @param geo - Geometry
 	 */
 	private void insertPoint(String resource, Geometry geo) {    
-		insertResourceTypeResource(this.resourceNS + resource,Constants.NS_SF + Constants.POINT);	    
-		insertLiteralTriplet(this.resourceNS + resource,Constants.NS_GEO + Constants.WKT,geo.toText(),
+		insertResourceTypeResource(this.resourceNS.replace(Constants.space,Constants.empty) + resource,
+				Constants.NS_SF + Constants.POINT);	    
+		insertLiteralTriplet(this.resourceNS.replace(Constants.space,Constants.empty) + resource,
+				Constants.NS_GEO + Constants.WKT,geo.toText(),
 				Constants.NS_GEO + Constants.WKTLiteral);
 	}
 
@@ -515,43 +568,43 @@ public class ShpToRDF {
 
 		for (int i = 0; i < Constants.SPECIAL_CHARACTER.length(); i++)
 			input = input.replace(Constants.SPECIAL_CHARACTER.charAt(i), Constants.ASCII.charAt(i));
-				
+
 		for (int i = 0; i < Constants.SYMBOLS.length(); i++)
 			input = input.replace(Constants.SYMBOLS.charAt(i), '-');
 
 		return input;
 	}
-	
+
 	/**
 	 * Replaces the sequence of specific repeated character.
 	 * @param input - String
 	 * @return String without specific repeated character.
 	 */	
 	public static String repeatedCharacters(String input) {
-		String s = input + " ";
-		String newString = "";
+		String s = input + Constants.space;
+		String newString = Constants.empty;
 		char char1, char2;
-			
+
 		for (int i = 0; i < (s.length() - 1); i++) {			
 			char1 = s.charAt(i);
 			char2 = s.charAt(i+1);				
 			if (char1 == '-'){ 
-				 if (char1 != char2){
-					 newString = newString + char1;
-				 }
+				if (char1 != char2){
+					newString = newString + char1;
+				}
 			} else {
 				newString = newString + char1;
 			}
 		}
-		
-		if (newString.equals("")){
+
+		if (newString.equals(Constants.empty)){
 			return input;
 		}
-		
+
 		if (newString.charAt(newString.length()-1) == '-'){
 			newString = newString.substring(0, newString.length()-1); 
 		}		
-		
+
 		return newString;
 	}
 
@@ -583,7 +636,7 @@ public class ShpToRDF {
 	public String getOntologyNSPrefix() { return this.ontologyNSPrefix; }
 	public void setOntologyNSPrefix(String ontologyNSPrefix) { this.ontologyNSPrefix = ontologyNSPrefix; }
 
-	public String getResourceNS() { return this.resourceNS; }
+	public String getResourceNS() { return this.resourceNS;}
 	public void setResourceNS(String resourceNS) { this.resourceNS = resourceNS; }
 
 	public String getResourceNSPrefix() { return this.resourceNSPrefix; }
@@ -591,13 +644,13 @@ public class ShpToRDF {
 
 	public String getLanguage() { return this.language; }
 	public void setLanguage(String language) { this.language = language; }
-	
+
 	public Boolean getFlag_csv() { return this.flag_csv; }
 	public void setFlag_csv(Boolean flag_csv) { this.flag_csv = flag_csv; }
 
 	public ClassesCSV[] getClasses() { return this.classes; }
 	public void setClasses(ClassesCSV[] classes) { this.classes = classes; }
-	
+
 	public CSV getCsv() { return this.csv; }
 	public void setCsv(CSV csv) { this.csv = csv; }	
 
