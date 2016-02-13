@@ -1,5 +1,5 @@
 /*
- * ShpToRDF.java	version 1.0   19/11/2015
+ * ShpToRDF.java	version 1.0   13/02/2016
  *
  * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
  *
@@ -47,11 +47,12 @@ import com.vividsolutions.jts.geom.Geometry;
  * Modified: 15/3/2013, added support for exporting custom geometries to (1) Virtuoso RDF and (2) according to WGS84 Geopositioning RDF vocabulary  
  * Modified: 12/6/2013, Kostas Patroumpas
  * Rename ShpConnector.java to ShpToRDF.java
- * Last modified by: Rosangelis Garcia, 19/11/2015
+ * Last modified by: Rosangelis Garcia, 13/02/2016
  */
 public class ShpToRDF {
 
 	private String attributeName;
+	private String phrase;	
 	private String feature;
 	private String ontologyNS;
 	private String ontologyNSPrefix;
@@ -79,9 +80,12 @@ public class ShpToRDF {
 	 * @param classes 
 	 * @param flag_csv 
 	 * @param csv 
+	 * @param attr
+	 * @param phr
 	 */	
-	public ShpToRDF(tripleGEOStepMeta smi, Boolean flag_csv, ClassesCSV[] classes, CSV csv){		
-		setAttributeName(smi.getAttributeName());
+	public ShpToRDF(tripleGEOStepMeta smi, Boolean flag_csv, ClassesCSV[] classes, CSV csv, String phr, String attr){		
+		setAttributeName(attr.toUpperCase());
+		setPhrase(phr);
 		setFeature(smi.getFeature());
 		setOntologyNS(smi.getOntologyNS());
 		setOntologyNSPrefix(smi.getOntologyNSPrefix());
@@ -179,8 +183,10 @@ public class ShpToRDF {
 	public void writeRdfModel(Object[] row, RowMetaInterface outputRowMeta) throws UnsupportedEncodingException {
 		String featureAttribute = null;
 
-		if (row[this.posAttribute] != null) {
-			featureAttribute = row[this.posAttribute].toString();
+		if (this.posAttribute > 0){
+			if (row[this.posAttribute] != null) {
+				featureAttribute = row[this.posAttribute].toString();
+			}
 		}
 
 		String label = featureAttribute;
@@ -320,7 +326,7 @@ public class ShpToRDF {
 				}
 				pos++;
 			}
-		}		
+		}
 
 		// GEOMETRY
 		Geometry geometry = (Geometry) row[this.posGeometry];
@@ -530,7 +536,13 @@ public class ShpToRDF {
 	 * @param lang
 	 */
 	private void insertLabelResource(String resource, String label, String lang) {				
-		Resource resource1 = this.model_rdf.createResource(resource);	
+		Resource resource1 = this.model_rdf.createResource(resource);
+		label = label.replaceAll("\\s+$", "");
+		if (this.phrase != null && this.phrase != ""){
+			
+			label = this.phrase + " " + label.replaceAll("\\s+","");
+		}
+		
 		if (label.toString().matches(".*\\d.*")){ // label is a number
 			this.model_rdf.add(resource1, RDFS.label, this.model_rdf.createLiteral(label,Constants.empty));									
 		} else if (label.toString().equals(Constants.empty)) {
@@ -671,6 +683,9 @@ public class ShpToRDF {
 
 	public ColumnDefinition[] getColumns() { return this.columns; }
 	public void setColumns(ColumnDefinition[] columns) { this.columns = columns; }
+	
+	public String getPhrase() { return phrase; }
+	public void setPhrase(String phrase) { this.phrase = phrase; }
 
 }
 

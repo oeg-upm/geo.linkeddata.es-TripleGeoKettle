@@ -1,5 +1,5 @@
 /*
- * tripleGEOStepMeta.java	version 1.0   10/01/2016
+ * tripleGEOStepMeta.java	version 1.0   13/02/2016
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -52,7 +52,7 @@ import org.w3c.dom.Node;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepMetaInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 10/01/2016
+ * Last modified by: Rosangelis Garcia, 13/02/2016
  */
 public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface {
 
@@ -355,7 +355,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 	public String[] getShow() { return new String[] { "YES", "NO" }; }	
 
 	public String getAttributeName(){ return this.attributeName; }	  
-	public void setAttributeName(String attributeName){ this.attributeName = attributeName.toUpperCase(); }
+	public void setAttributeName(String attributeName){ this.attributeName = attributeName; }
 
 	public String getFeature(){ return this.feature;}	  
 	public void setFeature(String feature){ this.feature = feature; } 
