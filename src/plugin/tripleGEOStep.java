@@ -1,5 +1,5 @@
 /*
- * tripleGEOStep.java	version 1.0   16/11/2015
+ * tripleGEOStep.java	version 1.0   13/02/2016
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -16,6 +16,8 @@
 package plugin;
 
 import java.io.IOException;
+
+import org.apache.commons.lang.StringUtils;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.RowMetaInterface;
@@ -33,13 +35,15 @@ import org.pentaho.di.trans.step.StepMetaInterface;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 16/11/2015
+ * Last modified by: Rosangelis Garcia, 13/02/2016
  */
 public class tripleGEOStep extends BaseStep implements StepInterface {
 
 	private tripleGEOStepData data;
 	private tripleGEOStepMeta meta;	
 	private ShpToRDF shpToRDF;
+	private String phrase;
+	private String attributeName;
 
 	public tripleGEOStep(StepMeta s, StepDataInterface stepDataInterface, int c, TransMeta t, Trans dis) {
 		super(s, stepDataInterface, c, t, dis);
@@ -105,9 +109,53 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 					logBasic("The CSV file doesn't exist.");					
 				}				
 			}
-			
-			this.shpToRDF = new ShpToRDF(this.meta,flag_csv,classes,csv);			
-			
+
+			// Verifies if the attribute has a phrase
+			String args = this.meta.getAttributeName();			
+
+			int count_plus = StringUtils.countMatches(args, Constants.STRING_TO_REPLACE);
+			if (count_plus == 0){ // <phrase> or <name_column>
+				if (StringUtils.countMatches(args, "\"") > 0){ 
+					// <phrase>
+					logBasic("Attribute Error");
+					throw new KettleException("tripleGEO.Exception.AttributesError: Check your tripleGEO "
+							+ "settings.");
+				} else { 
+					// <name_column>
+					this.attributeName = args.trim();
+					this.phrase = Constants.empty;
+				}	
+			} else if (count_plus == 1){ // <phrase> + <name_column>
+				String parts[] = args.split("\\+");
+				if (parts.length == 2){
+					if (parts[0] != null && !parts[0].equalsIgnoreCase("") &&
+							parts[1] != null && !parts[1].equalsIgnoreCase("")){
+						this.attributeName = parts[1].trim();
+						this.phrase = parts[0].trim();
+					} else {// Error
+						logBasic("Attribute Error");
+						throw new KettleException("tripleGEO.Exception.AttributesError: Check your tripleGEO "
+								+ "settings.");
+					}
+				} else {// Error
+					logBasic("Attribute Error");
+					throw new KettleException("tripleGEO.Exception.AttributesError: Check your tripleGEO "
+							+ "settings.");
+				}
+			} else { // Error
+				logBasic("Attribute Error");
+				throw new KettleException("tripleGEO.Exception.AttributesError: Check your tripleGEO "
+						+ "settings.");
+			}
+
+			if (this.meta.getAttributeName() == null){
+				logBasic("Attribute Not Found");
+				throw new KettleException("tripleGEO.Exception.AttributesNotFound: Check your tripleGEO "
+						+ "settings and restart columns.");
+			}
+
+			this.shpToRDF = new ShpToRDF(this.meta,flag_csv,classes,csv,this.phrase,this.attributeName);			
+
 			try {	
 				this.shpToRDF.getModelFromConfiguration(); // Init RDF	    		
 			} catch (Throwable t) {
@@ -118,13 +166,6 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 			this.data.outputRowMeta = getInputRowMeta().clone();
 			this.meta.getFields(this.data.outputRowMeta, getStepname(), null, null, this);  	
 
-			if (this.meta.getAttributeName() == null){
-				logBasic("Attribute not found (check your tripleGEO settings and restart columns)");
-				throw new KettleException("tripleGEO.Exception.AttributesNotFound: Check your tripleGEO "
-						+ "settings and restart columns.");
-			}
-						
-			
 			if ((this.meta.getAttributeName() != null) && (!this.meta.getAttributeName().isEmpty())){
 				RowMetaInterface rm = this.data.outputRowMeta;
 
@@ -150,16 +191,18 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 							}
 						}	    			
 						if (flag == 0){
-							logBasic("Attribute not found (check your tripleGEO settings and restart columns)");
+							logBasic("Attribute Not Found");
 							throw new KettleException("tripleGEO.Exception.AttributesNotFound: Check your tripleGEO "
 									+ "settings and restart columns.");
 						}
 					}
 
-					if (vmeta.getName().equalsIgnoreCase(this.meta.getAttributeName())) {
-						this.shpToRDF.setPosAttribute(pos);
+					if ((this.attributeName != null) && (this.attributeName != "")){
+						if (vmeta.getName().equalsIgnoreCase(this.attributeName)) {
+							this.shpToRDF.setPosAttribute(pos);
+						}
 					}
-
+					
 					if (vmeta.getName().equalsIgnoreCase(Constants.the_geom)) {
 						this.shpToRDF.setPosGeometry(pos);
 					}
@@ -167,11 +210,13 @@ public class tripleGEOStep extends BaseStep implements StepInterface {
 					pos++;
 				}
 			}   	
-
-			if (this.shpToRDF.getPosAttribute() < 0){
-				logBasic("Field not found (check your tripleGEO settings): " + this.meta.getAttributeName());
-				throw new KettleException("tripleGEO.Exception.FieldForReadNotFound: " + this.meta.getAttributeName());
-			}
+			
+			if  ((this.attributeName != null) && (this.attributeName != "")){
+				if (this.shpToRDF.getPosAttribute() < 0){
+					logBasic("Field Not Found (check your tripleGEO settings): " + this.attributeName);
+					throw new KettleException("tripleGEO.Exception.FieldForReadNotFound: " + this.attributeName);
+				}
+			}		
 
 			logBasic("tripleGEO step initialized successfully.");		
 		}

@@ -1,5 +1,5 @@
 /*
- * tripleGEOStepMeta.java	version 1.0   16/11/2015
+ * tripleGEOStepMeta.java	version 1.0   13/02/2016
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -52,7 +52,7 @@ import org.w3c.dom.Node;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepMetaInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 16/11/2015
+ * Last modified by: Rosangelis Garcia, 13/02/2016
  */
 public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface {
 
@@ -79,7 +79,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 	 * @throws KettleException - in case there is a conversion or XML encoding error
 	 */
 	public String getXML() throws KettleValueException {		
-		String retval = "";
+		String retval = Constants.empty;
 		retval = retval + "\t\t<attributename>" + getAttributeName() + "</attributename>" + Const.CR;
 		retval = retval + "\t\t<feature>" + getFeature() + "</feature>" + Const.CR;
 		retval = retval + "\t\t<ontologyns>" + getOntologyNS() + "</ontologyns>" + Const.CR;
@@ -319,9 +319,9 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 			this.language = rep.getStepAttributeString(id_step, "language");
 			this.pathCSV = rep.getStepAttributeString(id_step, "pathcsv");
 			this.uuidsActive = rep.getStepAttributeBoolean(id_step, "uuidsactive");			
-			if (this.language == null) { this.language = ""; }
-			if (this.ontologyNSPrefix == null) { this.ontologyNSPrefix = ""; }
-			if (this.resourceNSPrefix == null) { this.resourceNSPrefix = ""; }
+			if (this.language == null) { this.language = Constants.empty; }
+			if (this.ontologyNSPrefix == null) { this.ontologyNSPrefix = Constants.empty; }
+			if (this.resourceNSPrefix == null) { this.resourceNSPrefix = Constants.empty; }
 		} catch (Exception e) {
 			throw new KettleException(BaseMessages.getString(PKG.getName(), 
 					"tripleGEO.Exception.UnexpectedErrorInReadingStepInfo"), e);
@@ -355,7 +355,7 @@ public class tripleGEOStepMeta extends BaseStepMeta implements StepMetaInterface
 	public String[] getShow() { return new String[] { "YES", "NO" }; }	
 
 	public String getAttributeName(){ return this.attributeName; }	  
-	public void setAttributeName(String attributeName){ this.attributeName = attributeName.toUpperCase(); }
+	public void setAttributeName(String attributeName){ this.attributeName = attributeName; }
 
 	public String getFeature(){ return this.feature;}	  
 	public void setFeature(String feature){ this.feature = feature; } 

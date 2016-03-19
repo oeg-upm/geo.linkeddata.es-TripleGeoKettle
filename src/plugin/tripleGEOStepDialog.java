@@ -1,5 +1,5 @@
 /*
- * tripleGEOStepDialog.java	version 1.0   18/11/2015
+ * tripleGEOStepDialog.java	version 1.0   10/01/2016
  *
  * Copyright (C) 2015 Ontology Engineering Group, Universidad Politecnica de Madrid, Spain
  *
@@ -61,7 +61,7 @@ import java.util.ArrayList;
  * http://javadoc.pentaho.com/kettle/org/pentaho/di/trans/step/StepDialogInterface.html
  * 
  * @author Rosangelis Garcia
- * Last modified by: Rosangelis Garcia, 18/11/2015
+ * Last modified by: Rosangelis Garcia, 10/01/2016
  */
 public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInterface {
 
@@ -442,10 +442,10 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		ciColumns[3] = new ColumnInfo(BaseMessages.getString(PKG,"tripleGEOStepDialog.otherColumns.Label"), 
 				ColumnInfo.COLUMN_TYPE_TEXT, false);
 
-		this.wColumns = new TableView(this.transMeta, cData, SWT.BORDER	
-				| SWT.FULL_SELECTION | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL,
+		this.wColumns = new TableView(this.transMeta, cData, SWT.BORDER | SWT.MULTI,
 				ciColumns, this.input.getColumns() == null ? 1
-						: this.input.getColumns().length, true, lsMod, this.props);	
+						: this.input.getColumns().length, true, lsMod, this.props);
+		this.wColumns.setSortable(false); // Turns off sort arrows
 		this.fdColumns = new FormData();
 		this.fdColumns.left = new FormAttachment(0, 0);
 		this.fdColumns.top = new FormAttachment(this.wlColumns, margin);
@@ -543,8 +543,8 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			for (FieldDefinition field : fields) {
 				TableItem item = new TableItem(this.wFields.table, SWT.NONE);
 				int colnr = 1;
-				item.setText(colnr++, Const.NVL(field.prefix, ""));
-				item.setText(colnr++, Const.NVL(field.uri, ""));
+				item.setText(colnr++, Const.NVL(field.prefix, Constants.empty));
+				item.setText(colnr++, Const.NVL(field.uri, Constants.empty));
 			}
 		}
 		this.wFields.removeEmptyRows();
@@ -557,13 +557,13 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 				TableItem item = new TableItem(this.wColumns.table, SWT.NONE);
 				int colnr = 1;
 				item.setText(colnr++, Const.NVL(c.show, "YES"));
-				item.setText(colnr++, Const.NVL(c.column, ""));
+				item.setText(colnr++, Const.NVL(c.column, Constants.empty));
 				if (c.getColumn().equalsIgnoreCase(Constants.the_geom)){					
 					item.setText(colnr++, "n/a");
 					item.setText(colnr++, "n/a");				
 				} else {
-					item.setText(colnr++, Const.NVL(c.prefix, ""));
-					item.setText(colnr++, Const.NVL(c.uri, ""));
+					item.setText(colnr++, Const.NVL(c.prefix, Constants.empty));
+					item.setText(colnr++, Const.NVL(c.uri, Constants.empty));
 				}
 			}
 		} else if ((columns != null && this.trans.haveHopsChanged()) || (columns == null)){
@@ -647,7 +647,8 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 		this.input.setFields(fields);		
 		this.wFields.removeEmptyRows();
 		this.wFields.setRowNums();
-		this.wFields.optWidth(true);		
+		this.wFields.optWidth(true);
+		
 
 		int nrNonEmptyColumns = this.wColumns.nrNonEmpty();	
 		ColumnDefinition[] columns = new ColumnDefinition[nrNonEmptyColumns];
@@ -692,14 +693,14 @@ public class tripleGEOStepDialog extends BaseStepDialog implements StepDialogInt
 			
 			int j = 0;
 			for (String c : this.input.getColumn_name()) {
-				columns[j].column_shp = c;
+				columns[j].column_shp = c;				
 				if (columns[j].column.equalsIgnoreCase("empty")){
 					columns[j].column = c;
 				}
 				j++;
 			}
 		}
-		
+
 		this.wColumns.removeEmptyRows();
 		this.wColumns.setRowNums();
 		this.wColumns.optWidth(true);		
