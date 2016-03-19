@@ -1,5 +1,5 @@
 /*
- * ShpToRDF.java	version 1.0   19/11/2015
+ * ShpToRDF.java	version 1.0   19/03/2016
  *
  * Copyright (C) 2013 Institute for the Management of Information Systems, Athena RC, Greece.
  *
@@ -18,6 +18,7 @@
  */
 package plugin;
 
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -47,7 +48,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * Modified: 15/3/2013, added support for exporting custom geometries to (1) Virtuoso RDF and (2) according to WGS84 Geopositioning RDF vocabulary  
  * Modified: 12/6/2013, Kostas Patroumpas
  * Rename ShpConnector.java to ShpToRDF.java
- * Last modified by: Rosangelis Garcia, 19/11/2015
+ * Last modified by: Rosangelis Garcia, 19/03/2016
  */
 public class ShpToRDF {
 
@@ -313,7 +314,7 @@ public class ShpToRDF {
 
 		geometry = null; // Helps the garbage collector
 	}  
-
+		
 	/**
 	 * Adds columns in the model 
 	 * @param encodingResource - The attribute
@@ -325,7 +326,7 @@ public class ShpToRDF {
 		Resource resource = this.model_rdf.createResource(this.resourceNS + encodingResource);
 		Property property = this.model_rdf.createProperty(propertyNS + column.toLowerCase());		        		
 		Literal literal;
-		
+
 		if (object.toString().matches(".*\\d.*")) { // Object is a number
 			if (object.toString().matches("-?\\d+(\\.\\d+)?")){
 				float number = Float.parseFloat(object.toString());
@@ -337,19 +338,31 @@ public class ShpToRDF {
 					literal = this.model_rdf.createTypedLiteral(number);
 				}
 				resource.addLiteral(property, literal);
-			} else {
-				literal = this.model_rdf.createLiteral(object.toString(), "");
-				resource.addLiteral(property, literal);
+			} else {				
+				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
+					literal = this.model_rdf.createTypedLiteral(object.toString(),XSDDatatype.XSDdate);				
+				} else {
+					literal = this.model_rdf.createLiteral(object.toString(), "");
+				}
+				resource.addLiteral(property, literal);	
 			}						
 		} else if (object.toString().equals("")) {
 			resource.addProperty(property, object.toString());
 		} else {
 			if (this.language.equalsIgnoreCase(Constants.null_)){
-				literal = this.model_rdf.createLiteral(object.toString(), "");
-				resource.addLiteral(property, literal);
+				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
+					literal = this.model_rdf.createTypedLiteral(object.toString(),XSDDatatype.XSDdate);				
+				} else {
+					literal = this.model_rdf.createLiteral(object.toString(), "");
+				}
+				resource.addLiteral(property, literal);					
 			} else {
-				literal = this.model_rdf.createLiteral(object.toString(), this.language);
-				resource.addLiteral(property, literal);
+				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
+					literal = this.model_rdf.createTypedLiteral(object.toString(),XSDDatatype.XSDdate);				
+				} else {
+					literal = this.model_rdf.createLiteral(object.toString(), this.language);
+				}
+				resource.addLiteral(property, literal);	
 			}
 		}		
 	}
