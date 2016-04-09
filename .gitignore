@@ -1,6 +1,8 @@
 # Directories #
 /bin/
 target/
+classes/
+dist/
  
 
 # Eclipse #
