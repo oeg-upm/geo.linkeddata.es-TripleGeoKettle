@@ -225,7 +225,8 @@ public class ShpToRDF {
 		// Check if the CSV file exist
 		if (getFlag_csv()){ 
 			int pos_csv = 0;
-			for (ValueMetaInterface vmeta : outputRowMeta.getValueMetaList()) {   			
+			for (ValueMetaInterface vmeta : outputRowMeta.getValueMetaList()) {
+
 				if (vmeta.getName().equalsIgnoreCase(this.csv.getAttribute())){
 					fl = true;
 					row_csv = row[pos_csv];
@@ -297,7 +298,7 @@ public class ShpToRDF {
 						&& row[pos] != null){					
 					if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
 						addColumns(encodingResource,vmeta.getName(),row[pos],
-								this.resourceNS.replace(Constants.space,Constants.empty));    		
+								this.resourceNS.replace(Constants.space,Constants.empty), outputRowMeta.getValueMeta(pos));
 				}		
 				pos++;
 			}
@@ -307,7 +308,7 @@ public class ShpToRDF {
 					if (col.getPrefix() != null && col.getUri() != null){
 						if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
 							addColumns(encodingResource,col.getColumn(),row[pos],
-									col.getUri().replace(Constants.space,Constants.empty));	
+									col.getUri().replace(Constants.space,Constants.empty),outputRowMeta.getValueMeta(pos));
 					}
 				}
 				
@@ -318,11 +319,11 @@ public class ShpToRDF {
 					if (col.getUri() != null && col.getPrefix() != null){						
 						if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
 							addColumns(encodingResource,col.getColumn(),row[pos],
-									col.getUri().replace(Constants.space,Constants.empty));						
+									col.getUri().replace(Constants.space,Constants.empty), outputRowMeta.getValueMeta(pos));
 					} else {
 						if (!row[pos].toString().matches(Constants.empty) && !row[pos].toString().matches("0"))
 							addColumns(encodingResource,col.getColumn(),row[pos],
-									this.resourceNS.replace(Constants.space,Constants.empty));						
+									this.resourceNS.replace(Constants.space,Constants.empty), outputRowMeta.getValueMeta(pos));
 					}					
 				}
 				pos++;
@@ -365,8 +366,9 @@ public class ShpToRDF {
 	 * @param column - Columns's name
 	 * @param object - Value of the column
 	 * @param propertyNS - Property
+	 * @param valueMeta - Meta-information of the given column
 	 */	
-	private void addColumns(String encodingResource, String column, Object object, String propertyNS){
+	private void addColumns(String encodingResource, String column, Object object, String propertyNS, ValueMetaInterface valueMeta){
 		Resource resource = this.model_rdf.createResource(this.resourceNS.replace(Constants.space,Constants.empty) + encodingResource);
 		//Property property = this.model_rdf.createProperty(propertyNS + column.toLowerCase());	
 		Property property = this.model_rdf.createProperty(propertyNS + column);
@@ -385,7 +387,7 @@ public class ShpToRDF {
 				resource.addLiteral(property, literal);
 			} else {				
 				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
-					literal = this.model_rdf.createTypedLiteral(object.toString(),XSDDatatype.XSDdate);				
+					literal = this.model_rdf.createTypedLiteral(valueMeta.getDateFormat().format(object),XSDDatatype.XSDdate);
 				} else {
 					literal = this.model_rdf.createLiteral(object.toString(), "");
 				}
@@ -396,14 +398,14 @@ public class ShpToRDF {
 		} else {
 			if (this.language.equalsIgnoreCase(Constants.null_)){
 				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
-					literal = this.model_rdf.createTypedLiteral(object.toString(),XSDDatatype.XSDdate);				
+					literal = this.model_rdf.createTypedLiteral(valueMeta.getDateFormat().format(object),XSDDatatype.XSDdate);
 				} else {
 					literal = this.model_rdf.createLiteral(object.toString(), "");
 				}
 				resource.addLiteral(property, literal);					
 			} else {
 				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
-					literal = this.model_rdf.createTypedLiteral(object.toString(),XSDDatatype.XSDdate);				
+					literal = this.model_rdf.createTypedLiteral(valueMeta.getDateFormat().format(object),XSDDatatype.XSDdate);
 				} else {
 					literal = this.model_rdf.createLiteral(object.toString(), this.language);
 				}
