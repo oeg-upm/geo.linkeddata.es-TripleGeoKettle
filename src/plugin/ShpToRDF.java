@@ -397,6 +397,9 @@ public class ShpToRDF {
 				}
 				resource.addLiteral(property, literal);	
 			}						
+		} else if(object.toString().matches("^<http:(.*)>$")){ // Object is an url resource
+			Resource resource_value = this.model_rdf.createResource(object.toString().replace(">", "").replace("<", ""));
+			resource.addProperty(property, resource_value);
 		} else if (object.toString().equals(Constants.empty)) {
 			resource.addProperty(property, object.toString());
 		} else {
