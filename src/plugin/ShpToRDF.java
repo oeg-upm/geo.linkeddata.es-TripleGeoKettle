@@ -385,11 +385,15 @@ public class ShpToRDF {
 					literal = this.model_rdf.createTypedLiteral(number);
 				}
 				resource.addLiteral(property, literal);
-			} else {				
+			} else {
 				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
 					literal = this.model_rdf.createTypedLiteral(valueMeta.getDateFormat().format(object),XSDDatatype.XSDdate);
 				} else {
-					literal = this.model_rdf.createLiteral(object.toString(), "");
+					if (this.language.equalsIgnoreCase(Constants.null_)){
+						literal = this.model_rdf.createLiteral(object.toString(), "");
+					} else {
+						literal = this.model_rdf.createLiteral(object.toString(), this.language);
+					}
 				}
 				resource.addLiteral(property, literal);	
 			}						
