@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>BTN100_0301S_RIO</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <directory>&#47;</directory>
+    <parameters>
+    </parameters>
+    <log>
+      <read/>
+      <write/>
+      <input/>
+      <output/>
+      <update/>
+      <rejected/>
+      <connection/>
+      <table/>
+      <step_performance_table/>
+      <use_batchid>Y</use_batchid>
+      <use_logfield>N</use_logfield>
+      <size_limit_lines/>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+  <modified_user>-</modified_user>
+  <modified_date>2015&#47;11&#47;16 11:01:32.633</modified_date>
+  </info>
+  <notepads>
+    <notepad>
+      <note>#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Copyright (C) 2015 Ontology Engineering Group.
+  author = Rosangelis Garcia
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+
+This transformation allows the generation of a RDF under the GeoSPARQL 
+standard. First the shapefile is read. Then the geometry field (always 
+the_geom when reading a shapefile) is transformed to the WGS 84 spatial 
+reference system. After this process, the RDF is generated in the tripleGEO
+step and finally exported to a file whose extension is ttl.</note>
+      <xloc>156</xloc>
+      <yloc>32</yloc>
+      <width>509</width>
+      <heigth>140</heigth>
+    </notepad>
+  </notepads>
+  <order>
+  <hop> <from>Shapefile File Input</from><to>SRS Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>SRS Transformation</from><to>tripleGEO</to><enabled>Y</enabled> </hop>  <hop> <from>tripleGEO</from><to>Text file output</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>SRS Transformation</name>
+    <type>SRSTransformation</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<field_name>the_geom</field_name>
+<source_gui_status>1</source_gui_status>
+<target_gui_status>1</target_gui_status>
+    <source_srs>
+<authority>EPSG</authority>
+<srid>4258</srid>
+<description>ETRS89</description>
+<is_custom>N</is_custom>
+    </source_srs>
+    <target_srs>
+<authority>EPSG</authority>
+<srid>4326</srid>
+<description>WGS 84</description>
+<is_custom>N</is_custom>
+    </target_srs>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>340</xloc>
+      <yloc>243</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Shapefile File Input</name>
+    <type>GISFileInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <filename/>
+    <isfilenameinfield>N</isfilenameinfield>
+    <filenamefield/>
+    <limit>0</limit>
+    <add_rownr>N</add_rownr>
+    <field_rownr/>
+    <gis_file_charset>ISO-8859-1</gis_file_charset>
+    <passing_through_fields>N</passing_through_fields>
+    <accept_stepname/>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>215</xloc>
+      <yloc>243</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Text file output</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>;</separator>
+    <enclosure>&quot;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <file>
+      <name/>
+      <is_command>N</is_command>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>ttl</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>rdf_output</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>564</xloc>
+      <yloc>243</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>tripleGEO</name>
+    <type>tripleGEO</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+		<attributename>ETIQUETA</attributename>
+		<feature>Río Superficial</feature>
+		<ontologyns>http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#</ontologyns>
+		<ontologynsprefix>esadm</ontologynsprefix>
+		<resourcens>http://geo.linkeddata.es/resource/</resourcens>
+		<resourcensprefix>georesource</resourcensprefix>
+		<language>es</language>
+		<pathcsv>null</pathcsv>
+		<uuidsactive>false</uuidsactive>
+		<fields>
+		</fields>
+		<columns>
+		<columns>
+		<column>the_geom</column>
+		<prefix>n&#47;a</prefix>
+		<uri/>
+		<show>YES</show>
+		<column_shp>the_geom</column_shp>
+		</columns>
+		<columns>
+		<column>ID</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>ID</column_shp>
+		</columns>
+		<columns>
+		<column>ID_BD</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>ID_BD</column_shp>
+		</columns>
+		<columns>
+		<column>ID_CODIGO</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>ID_CODIGO</column_shp>
+		</columns>
+		<columns>
+		<column>ID_MOD</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>ID_MOD</column_shp>
+		</columns>
+		<columns>
+		<column>FECHA_ALTA</column>
+		<prefix/>
+		<uri/>
+		<show>NO</show>
+		<column_shp>FECHA_ALTA</column_shp>
+		</columns>
+		<columns>
+		<column>CATEG_0301</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>CATEG_0301</column_shp>
+		</columns>
+		<columns>
+		<column>COD_RIO</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>COD_RIO</column_shp>
+		</columns>
+		<columns>
+		<column>ETIQUETA</column>
+		<prefix/>
+		<uri/>
+		<show>YES</show>
+		<column_shp>ETIQUETA</column_shp>
+		</columns>
+		</columns>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>448</xloc>
+      <yloc>242</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step_error_handling>
+  </step_error_handling>
+   <slave-step-copy-partition-distribution>
+</slave-step-copy-partition-distribution>
+   <slave_transformation>N</slave_transformation>
+</transformation>
