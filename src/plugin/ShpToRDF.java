@@ -27,16 +27,21 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.UUID;
+
 import org.geotools.geometry.jts.JTS;
 import org.opengis.referencing.operation.MathTransform;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMetaInterface;
+
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 
 /**
  * Class to convert shapefiles to RDF.
@@ -113,7 +118,7 @@ public class ShpToRDF {
 			modelAux.setNsPrefix(fieldPrefix, fieldUri);							
 		} else if (modelAux.getNsPrefixURI(fieldPrefix) != null 
 				&& modelAux.getNsURIPrefix(fieldUri) == null){ // Prefix equal, URI different
-			modelAux.setNsPrefix(fieldPrefix + "_", fieldUri);
+			modelAux.setNsPrefix(fieldPrefix + "", fieldUri);
 		}		
 	}
 
@@ -198,7 +203,7 @@ public class ShpToRDF {
 			// Generate UUIDs (Universally Unique Identifiers)
 			encodingResource = UUID.nameUUIDFromBytes(featureAttribute.getBytes()).toString();
 			if (encodingResource.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
-				encodingResource = "_" + encodingResource;
+				encodingResource = "" + encodingResource;
 			}
 		} else {
 			//encodingResource = repeatedCharacters(URLEncoder.encode(featureAttribute.toLowerCase(), Constants.UTF_8)
@@ -209,11 +214,11 @@ public class ShpToRDF {
 
 			if (featureAttribute.length() > 1){
 				if (featureAttribute.substring(0, 1).matches("-?\\d+(\\.\\d+)?")){
-					encodingResource = "_" + encodingResource;
+					encodingResource = "" + encodingResource;
 				}
 			} else if (featureAttribute.length() == 1){
 				if (featureAttribute.matches("-?\\d+(\\.\\d+)?")){
-					encodingResource = "_" + encodingResource;
+					encodingResource = "" + encodingResource;
 				}
 			}			
 		}
@@ -330,8 +335,19 @@ public class ShpToRDF {
 			}
 		}
 
+		Geometry geometry = null;
 		// GEOMETRY
-		Geometry geometry = (Geometry) row[this.posGeometry];
+		try {
+			geometry = (Geometry) row[this.posGeometry];
+		} catch (Exception e1) {
+			WKTReader reader = new WKTReader();
+			try {
+				geometry = reader.read((String) row[this.posGeometry]);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		// Attempt to transform geometry into the target CRS
 		if (transform != null) {
@@ -384,7 +400,8 @@ public class ShpToRDF {
 				} else {
 					literal = this.model_rdf.createTypedLiteral(number);
 				}
-				resource.addLiteral(property, literal);
+				//resource.addLiteral(property, literal);
+				resource.addProperty(property, object.toString());
 			} else {
 				if (object.getClass().getName().equalsIgnoreCase("java.util.Date")){
 					literal = this.model_rdf.createTypedLiteral(valueMeta.getDateFormat().format(object),XSDDatatype.XSDdate);
@@ -397,7 +414,7 @@ public class ShpToRDF {
 				}
 				resource.addLiteral(property, literal);	
 			}						
-		} else if(object.toString().matches("^<http:(.*)>$")){ // Object is an url resource
+		} else if(object.toString().matches("^<http(.*)>$")){ // Object is an url resource
 			Resource resource_value = this.model_rdf.createResource(object.toString().replace(">", "").replace("<", ""));
 			resource.addProperty(property, resource_value);
 		} else if (object.toString().equals(Constants.empty)) {
